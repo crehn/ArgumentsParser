@@ -17,31 +17,68 @@ public class ArgumentParserTest
 	}
 	
 	@Test
-	public void isOptionSetShouldReturnFalseForEmptyArgs() throws Exception
+	public void isOptionSetReturnsFalseForEmptyArgs() throws Exception
 	{
 		parser.parse(new String[] {});
-		assertFalse(parser.isOptionSet("o"));
+		
+		assertFalse(parser.isOptionSet('o'));
 	}
 	
-	@Test
-	public void isOptionSetShouldReturnFalseWhenNoOptionIsSpecified() throws Exception
+	@Test(expected = ArgumentParsingException.class)
+	public void isOptionSetReturnsFalseWhenNoOptionIsSpecified() throws Exception
 	{
 		parser.parse(new String[] { "dummy text" });
-		assertFalse(parser.isOptionSet("o"));
 	}
 	
 	@Test
 	public void isOptionSetReturnsTrueWhenOptionIsSet() throws Exception
 	{
-		parser.specifyOption("o");
+		parser.specifyOption('o');
 		parser.parse(new String[] { "-o" });
-		assertTrue(parser.isOptionSet("o"));
+		
+		assertTrue(parser.isOptionSet('o'));
 	}
 	
 	@Test(expected = ArgumentParsingException.class)
 	public void parseThrowsWhenUnspecifiedOption() throws Exception
 	{
 		parser.parse(new String[] { "-o" });
+	}
+	
+	@Test(expected = ArgumentParsingException.class)
+	public void parseThrowsWhenAFurtherUnspecifiedOption() throws Exception
+	{
+		parser.specifyOption('o');
+		
+		parser.parse(new String[] { "-o", "-u" });
+	}
+	
+	@Test(expected = ArgumentParsingException.class)
+	public void parseThrowsWhenAFurtherUnspecifiedConcatenatedOption() throws Exception
+	{
+		parser.specifyOption('o');
+		
+		parser.parse(new String[] { "-ou" });
+	}
+	
+	@Test
+	public void isOptionSetReturnsTrueWhenSecondOptionSet() throws Exception
+	{
+		parser.specifyOption('o');
+		parser.specifyOption('u');
+		parser.parse(new String[] { "-o", "-u" });
+		
+		assertTrue(parser.isOptionSet('u'));
+	}
+	
+	@Test
+	public void isOptionSetReturnsTrueWhenConcatenatedOptionSet() throws Exception
+	{
+		parser.specifyOption('o');
+		parser.specifyOption('u');
+		parser.parse(new String[] { "-ou" });
+		
+		assertTrue(parser.isOptionSet('u'));
 	}
 	
 }

@@ -1,28 +1,65 @@
 package crehn.argumentparser;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArgumentParser
 {
 	private String[] args;
-	private String option;
+	private final List<Character> specifiedOptions = new ArrayList<>();
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
-		if (args.length > 0 && args[0].startsWith("-") && !("-" + option).equals(args[0]))
-			throw new ArgumentParsingException("Unknown option " + "-" + option);
+		for (String arg : args)
+		{
+			if (looksLikeOptions(arg))
+			{
+				for (char c : arg.substring(1).toCharArray())
+				{
+					if (!isSpecifiedOption(c))
+						throw new ArgumentParsingException("Unknown option " + c);
+				}
+			}
+			else
+			{
+				throw new ArgumentParsingException("Unexpected argument: " + arg);
+			}
+		}
 		
 		this.args = args;
 	}
 	
-	public boolean isOptionSet(String option)
+	private boolean looksLikeOptions(String arg)
 	{
-		return Arrays.asList(args).contains("-" + option);
+		return arg.startsWith("-");
 	}
 	
-	public void specifyOption(String option)
+	private boolean isSpecifiedOption(char option)
 	{
-		this.option = option;
+		return specifiedOptions.contains(option);
+	}
+	
+	public boolean isOptionSet(char option)
+	{
+		for (String arg : args)
+		{
+			if (looksLikeOptions(arg))
+			{
+				for (char c : arg.toCharArray())
+				{
+					if (c == option)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public void specifyOption(char option)
+	{
+		specifiedOptions.add(option);
 	}
 	
 }
