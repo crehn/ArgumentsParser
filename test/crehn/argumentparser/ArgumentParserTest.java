@@ -1,7 +1,6 @@
 package crehn.argumentparser;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +13,12 @@ public class ArgumentParserTest
 	public void setUp()
 	{
 		parser = new ArgumentParser();
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void isOptionSetThrowsWhenParseNotCalled() throws Exception
+	{
+		parser.isOptionSet('c');
 	}
 	
 	@Test
@@ -81,4 +86,53 @@ public class ArgumentParserTest
 		assertTrue(parser.isOptionSet('u'));
 	}
 	
+	@Test(expected = IllegalStateException.class)
+	public void getParameterThrowsWhenParseNotCalled() throws Exception
+	{
+		parser.getParameter('c');
+	}
+	
+	@Test
+	public void getParameterReturnsNullWhenNotSet() throws Exception
+	{
+		parser.parse(new String[] {});
+		
+		assertNull(parser.getParameter('p'));
+	}
+	
+	@Test(expected = ArgumentParsingException.class)
+	public void getParameterThrowsWhenNotSpecified() throws Exception
+	{
+		parser.parse(new String[] { "-p", "value" });
+	}
+	
+	@Test
+	public void getParameterReturnsValueWhenSet() throws Exception
+	{
+		parser.specifyParameter('p');
+		parser.parse(new String[] { "-p", "value" });
+		
+		assertEquals("value", parser.getParameter('p'));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingOptionTwiceThrows() throws Exception
+	{
+		parser.specifyOption('o');
+		parser.specifyOption('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingParameterTwiceThrows() throws Exception
+	{
+		parser.specifyParameter('o');
+		parser.specifyParameter('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void conflictingSpecificationThrows2() throws Exception
+	{
+		parser.specifyParameter('o');
+		parser.specifyOption('o');
+	}
 }
