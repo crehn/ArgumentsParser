@@ -29,7 +29,7 @@ public class ArgumentParserTest
 		assertFalse(parser.isOptionSet('o'));
 	}
 	
-	@Test(expected = ArgumentParsingException.class)
+	@Test(expected = UnexpectedArgumentException.class)
 	public void isOptionSetReturnsFalseWhenNoOptionIsSpecified() throws Exception
 	{
 		parser.parse(new String[] { "dummy text" });
@@ -44,13 +44,13 @@ public class ArgumentParserTest
 		assertTrue(parser.isOptionSet('o'));
 	}
 	
-	@Test(expected = ArgumentParsingException.class)
+	@Test(expected = UnknownArgumentException.class)
 	public void parseThrowsWhenUnspecifiedOption() throws Exception
 	{
 		parser.parse(new String[] { "-o" });
 	}
 	
-	@Test(expected = ArgumentParsingException.class)
+	@Test(expected = UnknownArgumentException.class)
 	public void parseThrowsWhenAFurtherUnspecifiedOption() throws Exception
 	{
 		parser.specifyOption('o');
@@ -58,7 +58,7 @@ public class ArgumentParserTest
 		parser.parse(new String[] { "-o", "-u" });
 	}
 	
-	@Test(expected = ArgumentParsingException.class)
+	@Test(expected = UnknownArgumentException.class)
 	public void parseThrowsWhenAFurtherUnspecifiedConcatenatedOption() throws Exception
 	{
 		parser.specifyOption('o');
@@ -134,5 +134,27 @@ public class ArgumentParserTest
 	{
 		parser.specifyParameter('o');
 		parser.specifyOption('o');
+	}
+	
+	@Test(expected = UnexpectedArgumentException.class)
+	public void parseThrowsIfTwoParameterValues() throws Exception
+	{
+		parser.specifyParameter('p');
+		parser.parse(new String[] { "-p", "one", "two" });
+	}
+	
+	@Test(expected = ParameterValueMissingException.class)
+	public void getParameterThrowsWhenArgumentMissing() throws Exception
+	{
+		parser.specifyParameter('p');
+		parser.parse(new String[] { "-p" });
+	}
+	
+	@Test(expected = UnexpectedArgumentException.class)
+	public void getParameterThrowsWhenArgumentMissing2() throws Exception
+	{
+		parser.specifyParameter('p');
+		parser.specifyOption('o');
+		parser.parse(new String[] { "-p", "-o", "value" });
 	}
 }

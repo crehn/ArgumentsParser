@@ -11,6 +11,17 @@ public class ArgumentParser
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
+		throwIfNotValid(args);
+		
+		this.args = args;
+	}
+	
+	//
+	//
+	// validation
+	
+	private void throwIfNotValid(String[] args) throws ArgumentParsingException
+	{
 		boolean expectValueNext = false;
 		for (String arg : args)
 		{
@@ -22,17 +33,18 @@ public class ArgumentParser
 			{
 				expectValueNext = false;
 			}
-			else if (areSpecifiedOptions(arg))
+			else if (looksLikeOptions(arg))
 			{
-				// ok
+				throwIfContainsUnknownOptions(arg);
 			}
 			else
 			{
-				throw new UnknownArgumentException(arg);
+				throw new UnexpectedArgumentException(arg);
 			}
 		}
 		
-		this.args = args;
+		if (expectValueNext)
+			throw new ParameterValueMissingException(args[args.length - 1]);
 	}
 	
 	private boolean isSpecifiedParameter(String arg)
@@ -45,21 +57,33 @@ public class ArgumentParser
 		return true;
 	}
 	
-	private boolean areSpecifiedOptions(String arg)
+	private boolean looksLikeOptions(String arg)
+	{
+		return arg.startsWith("-");
+	}
+	
+	private void throwIfContainsUnknownOptions(String arg) throws UnknownArgumentException
 	{
 		for (char c : arg.substring(1).toCharArray())
 		{
 			if (!isSpecifiedOption(c))
-				return false;
+				throw new UnknownArgumentException(c);
 		}
-		
-		return true;
 	}
 	
 	private boolean isSpecifiedOption(char option)
 	{
 		return specifiedOptions.contains(option);
 	}
+	
+	private boolean isSpecifiedParameter(char option)
+	{
+		return specifiedParameters.contains(option);
+	}
+	
+	//
+	//
+	// queries
 	
 	public boolean isOptionSet(char option)
 	{
@@ -73,31 +97,11 @@ public class ArgumentParser
 				for (char c : arg.toCharArray())
 				{
 					if (c == option)
-					{
 						return true;
-					}
 				}
 			}
 		}
 		return false;
-	}
-	
-	private boolean looksLikeOptions(String arg)
-	{
-		return arg.startsWith("-");
-	}
-	
-	public void specifyOption(char option)
-	{
-		if (isSpecifiedOption(option) || isSpecifiedParameter(option))
-			throw new IllegalArgumentException("Option already specified: " + option);
-		
-		specifiedOptions.add(option);
-	}
-	
-	private boolean isSpecifiedParameter(char option)
-	{
-		return specifiedParameters.contains(option);
 	}
 	
 	public String getParameter(char c)
@@ -109,17 +113,25 @@ public class ArgumentParser
 		for (String arg : args)
 		{
 			if (valueExpectedNow)
-			{
 				return arg;
-			}
 			
 			if (("-" + c).equals(arg))
-			{
 				valueExpectedNow = true;
-			}
 		}
 		
 		return null;
+	}
+	
+	//
+	//
+	// defines
+	
+	public void specifyOption(char option)
+	{
+		if (isSpecifiedOption(option) || isSpecifiedParameter(option))
+			throw new IllegalArgumentException("Argument already specified: " + option);
+		
+		specifiedOptions.add(option);
 	}
 	
 	public void specifyParameter(char parameterName)

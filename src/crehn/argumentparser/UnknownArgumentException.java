@@ -4,9 +4,9 @@ public class UnknownArgumentException extends ArgumentParsingException
 {
 	private static final long serialVersionUID = 1L;
 	
-	public UnknownArgumentException(String arg)
+	public UnknownArgumentException(char c)
 	{
-		super("Unknown argument: " + arg);
+		super("Unknown argument: " + c);
 	}
 	
 }
