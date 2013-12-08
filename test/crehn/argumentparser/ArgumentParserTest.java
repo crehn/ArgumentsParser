@@ -30,7 +30,7 @@ public class ArgumentParserTest
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
-	public void isOptionSetReturnsFalseWhenNoOptionIsSpecified() throws Exception
+	public void parseThrowsWhenUnexpectedArguments() throws Exception
 	{
 		parser.parse(new String[] { "dummy text" });
 	}
@@ -42,6 +42,16 @@ public class ArgumentParserTest
 		parser.parse(new String[] { "-o" });
 		
 		assertTrue(parser.isOptionSet('o'));
+	}
+	
+	@Test
+	public void isOptionSetReturnsFalseWhenOptionIsNotSet() throws Exception
+	{
+		parser.specifyOption('o');
+		parser.specifyOption('u');
+		parser.parse(new String[] { "-o" });
+		
+		assertFalse(parser.isOptionSet('u'));
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
@@ -73,6 +83,7 @@ public class ArgumentParserTest
 		parser.specifyOption('u');
 		parser.parse(new String[] { "-o", "-u" });
 		
+		assertTrue(parser.isOptionSet('o'));
 		assertTrue(parser.isOptionSet('u'));
 	}
 	
@@ -83,6 +94,7 @@ public class ArgumentParserTest
 		parser.specifyOption('u');
 		parser.parse(new String[] { "-ou" });
 		
+		assertTrue(parser.isOptionSet('o'));
 		assertTrue(parser.isOptionSet('u'));
 	}
 	

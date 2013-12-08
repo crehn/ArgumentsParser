@@ -52,7 +52,7 @@ public class ArgumentParser
 		return specifiedParameters.contains(arg.charAt(1));
 	}
 	
-	private boolean isValue(String arg)
+	private boolean isValue(@SuppressWarnings("unused") String arg)
 	{
 		return true;
 	}
