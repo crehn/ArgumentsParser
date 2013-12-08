@@ -7,7 +7,7 @@ public class ArgumentParser
 {
 	private String[] args;
 	private final List<Character> specifiedOptions = new ArrayList<>();
-	private final List<Character> specifiedParameters = new ArrayList<>();
+	private final List<Parameter> specifiedParameters = new ArrayList<>();
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
@@ -49,7 +49,7 @@ public class ArgumentParser
 	
 	private boolean isSpecifiedParameter(String arg)
 	{
-		return specifiedParameters.contains(arg.charAt(1));
+		return specifiedParameters.contains(new Parameter(arg.charAt(1)));
 	}
 	
 	private boolean isValue(@SuppressWarnings("unused") String arg)
@@ -76,9 +76,9 @@ public class ArgumentParser
 		return specifiedOptions.contains(option);
 	}
 	
-	private boolean isSpecifiedParameter(char option)
+	private boolean isSpecifiedParameter(char paramName)
 	{
-		return specifiedParameters.contains(option);
+		return specifiedParameters.contains(new Parameter(paramName));
 	}
 	
 	//
@@ -139,7 +139,7 @@ public class ArgumentParser
 		if (isSpecifiedParameter(parameterName) || isSpecifiedOption(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
-		specifiedParameters.add(parameterName);
+		specifiedParameters.add(new Parameter(parameterName));
 	}
 	
 }
