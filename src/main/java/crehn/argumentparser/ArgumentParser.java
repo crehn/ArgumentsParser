@@ -1,13 +1,10 @@
 package crehn.argumentparser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArgumentParser
 {
 	private String[] args;
-	private final List<Character> specifiedOptions = new ArrayList<>();
-	private final List<Parameter> specifiedParameters = new ArrayList<>();
+	private final OptionList specifiedOptions = new OptionList();
+	private final ParameterList specifiedParameters = new ParameterList();
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
@@ -66,19 +63,9 @@ public class ArgumentParser
 	{
 		for (char c : arg.substring(1).toCharArray())
 		{
-			if (!isSpecifiedOption(c))
+			if (!specifiedOptions.isSpecifiedOption(c))
 				throw new UnknownArgumentException(c);
 		}
-	}
-	
-	private boolean isSpecifiedOption(char option)
-	{
-		return specifiedOptions.contains(option);
-	}
-	
-	private boolean isSpecifiedParameter(char paramName)
-	{
-		return specifiedParameters.contains(new Parameter(paramName));
 	}
 	
 	//
@@ -128,7 +115,7 @@ public class ArgumentParser
 	
 	public void specifyOption(char option)
 	{
-		if (isSpecifiedOption(option) || isSpecifiedParameter(option))
+		if (specifiedOptions.isSpecifiedOption(option) || specifiedParameters.isSpecifiedParameter(option))
 			throw new IllegalArgumentException("Argument already specified: " + option);
 		
 		specifiedOptions.add(option);
@@ -136,7 +123,8 @@ public class ArgumentParser
 	
 	public void specifyParameter(char parameterName)
 	{
-		if (isSpecifiedParameter(parameterName) || isSpecifiedOption(parameterName))
+		if (specifiedParameters.isSpecifiedParameter(parameterName)
+				|| specifiedOptions.isSpecifiedOption(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
 		specifiedParameters.add(new Parameter(parameterName));
