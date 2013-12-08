@@ -1,6 +1,6 @@
 package crehn.argumentparser;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class ParameterList extends ArrayList<Parameter>
 {
@@ -9,6 +9,11 @@ public class ParameterList extends ArrayList<Parameter>
 	public boolean isSpecifiedParameter(char paramName)
 	{
 		return contains(new Parameter(paramName));
+	}
+	
+	public List<String> parse(List<String> yetToParse)
+	{
+		return Collections.EMPTY_LIST;
 	}
 	
 }

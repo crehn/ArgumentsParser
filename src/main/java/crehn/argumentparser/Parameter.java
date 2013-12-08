@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Parameter
 {
-	private final char shortName;
+	private final char name;
 }

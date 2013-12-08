@@ -1,5 +1,8 @@
 package crehn.argumentparser;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ArgumentParser
 {
 	private String[] args;
@@ -9,6 +12,13 @@ public class ArgumentParser
 	public void parse(String[] args) throws ArgumentParsingException
 	{
 		throwIfNotValid(args);
+		
+		List<String> yetToParse = Arrays.asList(args);
+		while (!yetToParse.isEmpty())
+		{
+			yetToParse = specifiedOptions.parse(yetToParse);
+			yetToParse = specifiedParameters.parse(yetToParse);
+		}
 		
 		this.args = args;
 	}
@@ -118,7 +128,7 @@ public class ArgumentParser
 		if (specifiedOptions.isSpecifiedOption(option) || specifiedParameters.isSpecifiedParameter(option))
 			throw new IllegalArgumentException("Argument already specified: " + option);
 		
-		specifiedOptions.add(option);
+		specifiedOptions.add(new Option(option));
 	}
 	
 	public void specifyParameter(char parameterName)
