@@ -2,6 +2,8 @@ package crehn.argumentparser;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,34 +48,61 @@ public class OptionTest
 	}
 	
 	@Test
-	public void parseParsesEmptyString() throws Exception
+	public void canHandleReturnsTrueForConcatenatedOptions() throws Exception
 	{
-		option.parse("");
+		assertTrue(option.canHandle("-ou"));
+	}
+	
+	@Test
+	public void parseSetsFalseWhenEmptyString() throws Exception
+	{
+		option.parse(Arrays.asList(""));
 		
 		assertFalse(option.getIsSet());
 	}
 	
 	@Test
-	public void parseParsesOption() throws Exception
+	public void parseSetsTrueWhenExpectedOption() throws Exception
 	{
-		option.parse("-o");
+		List<String> yetToParse = option.parse(Arrays.asList("-o"));
 		
 		assertTrue(option.getIsSet());
+		assertEquals(Collections.emptyList(), yetToParse);
 	}
 	
 	@Test
-	public void parseParsesOtherOption() throws Exception
+	public void parseSetsFalseWhenOtherOption() throws Exception
 	{
-		option.parse("-u");
+		List<String> yetToParse = option.parse(Arrays.asList("-u"));
 		
 		assertFalse(option.getIsSet());
+		assertEquals(Arrays.asList("-u"), yetToParse);
 	}
 	
 	@Test
-	public void parseParsesMissingDash() throws Exception
+	public void parseSetsFalseWhenMissingDash() throws Exception
 	{
-		option.parse("o");
+		List<String> yetToParse = option.parse(Arrays.asList("o"));
 		
 		assertFalse(option.getIsSet());
+		assertEquals(Collections.emptyList(), yetToParse);
+	}
+	
+	@Test
+	public void parseCanHandleConcatenatedOptions() throws Exception
+	{
+		List<String> yetToParse = option.parse(Arrays.asList("-ou"));
+		
+		assertTrue(option.getIsSet());
+		assertEquals(Arrays.asList("-u"), yetToParse);
+	}
+	
+	@Test
+	public void parseCanHandleConcatenatedOptions2() throws Exception
+	{
+		List<String> yetToParse = option.parse(Arrays.asList("-uo"));
+		
+		assertTrue(option.getIsSet());
+		assertEquals(Arrays.asList("-u"), yetToParse);
 	}
 }

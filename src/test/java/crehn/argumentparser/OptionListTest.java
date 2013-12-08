@@ -98,4 +98,37 @@ public class OptionListTest
 		assertEquals(Arrays.asList("-v"), yetToParse);
 	}
 	
+	@Test
+	public void parseHandlesConcatenatedOptions() throws Exception
+	{
+		givenSpecifiedOptions('o', 'u');
+		givenArguments("-ou");
+		
+		List<String> yetToParse = optionList.parse(args);
+		
+		assertEquals(Collections.emptyList(), yetToParse);
+	}
+	
+	@Test
+	public void parseHandlesConcatenatedOptions2() throws Exception
+	{
+		givenSpecifiedOptions('o', 'u');
+		givenArguments("-uo");
+		
+		List<String> yetToParse = optionList.parse(args);
+		
+		assertEquals(Collections.emptyList(), yetToParse);
+	}
+	
+	@Test
+	public void parseHandlesConcatenatedOptions3() throws Exception
+	{
+		givenSpecifiedOptions('o', 'u');
+		givenArguments("-ouv");
+		
+		List<String> yetToParse = optionList.parse(args);
+		
+		assertEquals(Arrays.asList("-v"), yetToParse);
+	}
+	
 }

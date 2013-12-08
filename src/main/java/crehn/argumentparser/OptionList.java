@@ -18,8 +18,8 @@ public class OptionList extends ArrayList<Option>
 		if (option == null)
 			return yetToParse;
 		
-		option.parse(yetToParse.get(0));
-		return parse(yetToParse.subList(1, yetToParse.size()));
+		yetToParse = option.parse(yetToParse);
+		return parse(yetToParse);
 	}
 	
 	private Option getOptionByArgument(List<String> yetToParse)
@@ -29,7 +29,8 @@ public class OptionList extends ArrayList<Option>
 		
 		for (Option option : this)
 		{
-			if (option.canHandle(yetToParse.get(0)))
+			String firstArgument = yetToParse.get(0);
+			if (option.canHandle(firstArgument))
 				return option;
 		}
 		return null;
