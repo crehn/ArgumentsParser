@@ -16,11 +16,21 @@ public class ArgumentParser
 		List<String> yetToParse = Arrays.asList(args);
 		while (!yetToParse.isEmpty())
 		{
+			int sizeBefore = yetToParse.size();
 			yetToParse = specifiedOptions.parse(yetToParse);
 			yetToParse = specifiedParameters.parse(yetToParse);
+			if (!sizeHasChanged(yetToParse, sizeBefore))
+			{
+				throw new UnknownArgumentException(yetToParse.get(0).charAt(1));
+			}
 		}
 		
 		this.args = args;
+	}
+	
+	private boolean sizeHasChanged(List<String> yetToParse, int sizeBefore)
+	{
+		return yetToParse.size() != sizeBefore;
 	}
 	
 	//

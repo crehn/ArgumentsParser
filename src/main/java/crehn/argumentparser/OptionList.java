@@ -14,7 +14,7 @@ public class OptionList extends ArrayList<Option>
 	
 	public List<String> parse(List<String> yetToParse)
 	{
-		Option option = getOptionByArgument(yetToParse);
+		Option option = getOptionByArguments(yetToParse);
 		if (option == null)
 			return yetToParse;
 		
@@ -22,9 +22,9 @@ public class OptionList extends ArrayList<Option>
 		return parse(yetToParse);
 	}
 	
-	private Option getOptionByArgument(List<String> yetToParse)
+	private Option getOptionByArguments(List<String> yetToParse)
 	{
-		if (yetToParse.size() == 0)
+		if (yetToParse.isEmpty())
 			return null;
 		
 		for (Option option : this)
