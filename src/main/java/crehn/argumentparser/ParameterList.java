@@ -35,4 +35,23 @@ public class ParameterList extends ArrayList<Parameter>
 		return null;
 	}
 	
+	public String getByName(char paramName)
+	{
+		Parameter param = getParameterByName(paramName);
+		if (param == null)
+			throw new IllegalArgumentException("Parameter is not specified: " + paramName);
+		
+		return param.getValue();
+	}
+	
+	private Parameter getParameterByName(char paramName)
+	{
+		for (Parameter p : this)
+		{
+			if (p.getName() == paramName)
+				return p;
+		}
+		return null;
+	}
+	
 }

@@ -3,11 +3,13 @@ package crehn.argumentparser;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ParameterListTest
 {
@@ -32,16 +34,15 @@ public class ParameterListTest
 	}
 	
 	@Test
-	public void parseHandlsEmptyList() throws Exception
+	public void parseHandlesEmptyList() throws Exception
 	{
 		List<String> yetToParse = parameterList.parse(Collections.<String> emptyList());
 		
 		assertEquals(emptyList(), yetToParse);
 	}
 	
-	@Ignore
 	@Test(expected = NullPointerException.class)
-	public void parseHandlsNull() throws Exception
+	public void parseHandlesNull() throws Exception
 	{
 		parameterList.parse(null);
 	}
@@ -55,6 +56,15 @@ public class ParameterListTest
 		assertEquals(arguments, yetToParse);
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void getByNameThrowsWhenParameterNotSpecified() throws Exception
+	{
+		givenArguments("-p");
+		parameterList.parse(arguments);
+		
+		parameterList.getByName('p');
+	}
+	
 	@Test
 	public void parseReturnsIdentityWhenOtherParameterSpecified() throws Exception
 	{
@@ -63,6 +73,7 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(arguments, yetToParse);
+		assertNull(parameterList.getByName('p'));
 	}
 	
 	@Test(expected = ParameterValueMissingException.class)
@@ -82,6 +93,7 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(emptyList(), yetToParse);
+		assertEquals("value", parameterList.getByName('p'));
 	}
 	
 	@Test
@@ -92,6 +104,8 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(emptyList(), yetToParse);
+		assertEquals("pvalue", parameterList.getByName('p'));
+		assertEquals("qvalue", parameterList.getByName('q'));
 	}
 	
 	@Test
@@ -102,6 +116,8 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(asList("additional value"), yetToParse);
+		assertEquals("pvalue", parameterList.getByName('p'));
+		assertEquals("qvalue", parameterList.getByName('q'));
 	}
 	
 }

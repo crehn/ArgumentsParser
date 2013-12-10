@@ -8,7 +8,7 @@ public class ArgumentParser
 {
 	private String[] args;
 	private final OptionList options = new OptionList();
-	private final ParameterList specifiedParameters = new ParameterList();
+	private final ParameterList parameters = new ParameterList();
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
@@ -17,7 +17,7 @@ public class ArgumentParser
 		{
 			int sizeBefore = yetToParse.size();
 			yetToParse = options.parse(yetToParse);
-			yetToParse = specifiedParameters.parse(yetToParse);
+			yetToParse = parameters.parse(yetToParse);
 			if (!sizeHasChanged(yetToParse, sizeBefore))
 			{
 				if (looksLikeOptions(yetToParse.get(0)))
@@ -48,27 +48,17 @@ public class ArgumentParser
 		return options.isOptionSet(option);
 	}
 	
-	public String getParameter(char c)
+	public String getParameter(char paramName)
 	{
 		if (args == null)
 			throw new IllegalStateException("You need to call parse() first.");
 		
-		boolean valueExpectedNow = false;
-		for (String arg : args)
-		{
-			if (valueExpectedNow)
-				return arg;
-			
-			if (("-" + c).equals(arg))
-				valueExpectedNow = true;
-		}
-		
-		return null;
+		return parameters.getByName(paramName);
 	}
 	
 	public void specifyOption(char option)
 	{
-		if (options.isSpecifiedOption(option) || specifiedParameters.isSpecifiedParameter(option))
+		if (options.isSpecifiedOption(option) || parameters.isSpecifiedParameter(option))
 			throw new IllegalArgumentException("Argument already specified: " + option);
 		
 		options.add(new Option(option));
@@ -76,11 +66,10 @@ public class ArgumentParser
 	
 	public void specifyParameter(char parameterName)
 	{
-		if (specifiedParameters.isSpecifiedParameter(parameterName)
-				|| options.isSpecifiedOption(parameterName))
+		if (parameters.isSpecifiedParameter(parameterName) || options.isSpecifiedOption(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
-		specifiedParameters.add(new Parameter(parameterName));
+		parameters.add(new Parameter(parameterName));
 	}
 	
 }

@@ -40,7 +40,7 @@ public class OptionList extends ArrayList<Option>
 	{
 		Option option = getOptionByName(optionName);
 		if (option == null)
-			throw new IllegalArgumentException("Unknown Option: " + optionName);
+			throw new IllegalArgumentException("Option is not specified: " + optionName);
 		
 		return option.getIsSet();
 	}

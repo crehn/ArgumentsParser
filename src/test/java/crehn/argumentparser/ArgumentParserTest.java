@@ -116,6 +116,7 @@ public class ArgumentParserTest
 	@Test
 	public void getParameterReturnsNullWhenNotSet() throws Exception
 	{
+		parser.specifyParameter('p');
 		parser.parse(new String[] {});
 		
 		assertNull(parser.getParameter('p'));
