@@ -12,8 +12,6 @@ public class ArgumentParser
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
-		throwIfNotValid(args);
-		
 		List<String> yetToParse = asList(args);
 		while (!yetToParse.isEmpty())
 		{
@@ -22,7 +20,10 @@ public class ArgumentParser
 			yetToParse = specifiedParameters.parse(yetToParse);
 			if (!sizeHasChanged(yetToParse, sizeBefore))
 			{
-				throw new UnknownArgumentException(yetToParse.get(0).charAt(1));
+				if (looksLikeOptions(yetToParse.get(0)))
+					throw new UnknownArgumentException(yetToParse.get(0).charAt(1));
+				else
+					throw new UnexpectedArgumentException(yetToParse.get(0));
 			}
 		}
 		
@@ -34,64 +35,10 @@ public class ArgumentParser
 		return yetToParse.size() != sizeBefore;
 	}
 	
-	//
-	//
-	// validation
-	
-	private void throwIfNotValid(String[] args) throws ArgumentParsingException
-	{
-		boolean expectValueNext = false;
-		for (String arg : args)
-		{
-			if (isSpecifiedParameter(arg))
-			{
-				expectValueNext = true;
-			}
-			else if (expectValueNext && isValue(arg))
-			{
-				expectValueNext = false;
-			}
-			else if (looksLikeOptions(arg))
-			{
-				throwIfContainsUnknownOptions(arg);
-			}
-			else
-			{
-				throw new UnexpectedArgumentException(arg);
-			}
-		}
-		
-		if (expectValueNext)
-			throw new ParameterValueMissingException(args[args.length - 1]);
-	}
-	
-	private boolean isSpecifiedParameter(String arg)
-	{
-		return specifiedParameters.contains(new Parameter(arg.charAt(1)));
-	}
-	
-	private boolean isValue(@SuppressWarnings("unused") String arg)
-	{
-		return true;
-	}
-	
 	private boolean looksLikeOptions(String arg)
 	{
 		return arg.startsWith("-");
 	}
-	
-	private void throwIfContainsUnknownOptions(String arg) throws UnknownArgumentException
-	{
-		for (char c : arg.substring(1).toCharArray())
-		{
-			if (!specifiedOptions.isSpecifiedOption(c))
-				throw new UnknownArgumentException(c);
-		}
-	}
-	
-	//
-	//
-	// queries
 	
 	public boolean isOptionSet(char option)
 	{
@@ -129,10 +76,6 @@ public class ArgumentParser
 		
 		return null;
 	}
-	
-	//
-	//
-	// defines
 	
 	public void specifyOption(char option)
 	{
