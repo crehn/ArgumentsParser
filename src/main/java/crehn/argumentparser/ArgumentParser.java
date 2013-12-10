@@ -1,6 +1,7 @@
 package crehn.argumentparser;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+
 import java.util.List;
 
 public class ArgumentParser
@@ -13,7 +14,7 @@ public class ArgumentParser
 	{
 		throwIfNotValid(args);
 		
-		List<String> yetToParse = Arrays.asList(args);
+		List<String> yetToParse = asList(args);
 		while (!yetToParse.isEmpty())
 		{
 			int sizeBefore = yetToParse.size();

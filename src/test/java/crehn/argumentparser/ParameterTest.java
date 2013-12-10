@@ -1,8 +1,11 @@
 package crehn.argumentparser;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.*;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +23,7 @@ public class ParameterTest
 	
 	private void givenArguments(String... arguments)
 	{
-		this.arguments = Arrays.asList(arguments);
+		this.arguments = asList(arguments);
 	}
 	
 	@Test
@@ -38,31 +41,31 @@ public class ParameterTest
 	@Test
 	public void canHandleReturnsTrueForSpecifiedParameter() throws Exception
 	{
-		assertTrue(parameter.canHandle(Arrays.asList("-p")));
+		assertTrue(parameter.canHandle(asList("-p")));
 	}
 	
 	@Test
 	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception
 	{
-		assertFalse(parameter.canHandle(Arrays.asList("p")));
+		assertFalse(parameter.canHandle(asList("p")));
 	}
 	
 	@Test
 	public void canHandleReturnsFalseForOtherParameter() throws Exception
 	{
-		assertFalse(parameter.canHandle(Arrays.asList("-q")));
+		assertFalse(parameter.canHandle(asList("-q")));
 	}
 	
 	@Test
 	public void canHandleReturnsTrueForSpecifiedParameterDespiteFollowing() throws Exception
 	{
-		assertTrue(parameter.canHandle(Arrays.asList("-p", "-q")));
+		assertTrue(parameter.canHandle(asList("-p", "-q")));
 	}
 	
 	@Test
 	public void canHandleReturnsFalseForOtherParameterDespiteFollowing() throws Exception
 	{
-		assertFalse(parameter.canHandle(Arrays.asList("-q", "-p")));
+		assertFalse(parameter.canHandle(asList("-q", "-p")));
 	}
 	
 	@Test
@@ -72,7 +75,7 @@ public class ParameterTest
 		
 		List<String> yetToParse = parameter.parse(arguments);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 		assertNull(parameter.getValue());
 	}
 	
@@ -83,7 +86,7 @@ public class ParameterTest
 		
 		List<String> yetToParse = parameter.parse(arguments);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 		assertEquals("value", parameter.getValue());
 	}
 	
@@ -94,7 +97,7 @@ public class ParameterTest
 		
 		List<String> yetToParse = parameter.parse(arguments);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 		assertEquals("value", parameter.getValue());
 	}
 	

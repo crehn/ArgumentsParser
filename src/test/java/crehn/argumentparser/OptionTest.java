@@ -1,8 +1,10 @@
 package crehn.argumentparser;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.*;
 
-import java.util.*;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +58,7 @@ public class OptionTest
 	@Test
 	public void parseSetsFalseWhenEmptyString() throws Exception
 	{
-		option.parse(Arrays.asList(""));
+		option.parse(asList(""));
 		
 		assertFalse(option.getIsSet());
 	}
@@ -64,45 +66,45 @@ public class OptionTest
 	@Test
 	public void parseSetsTrueWhenExpectedOption() throws Exception
 	{
-		List<String> yetToParse = option.parse(Arrays.asList("-o"));
+		List<String> yetToParse = option.parse(asList("-o"));
 		
 		assertTrue(option.getIsSet());
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
 	public void parseSetsFalseWhenOtherOption() throws Exception
 	{
-		List<String> yetToParse = option.parse(Arrays.asList("-u"));
+		List<String> yetToParse = option.parse(asList("-u"));
 		
 		assertFalse(option.getIsSet());
-		assertEquals(Arrays.asList("-u"), yetToParse);
+		assertEquals(asList("-u"), yetToParse);
 	}
 	
 	@Test
 	public void parseSetsFalseWhenMissingDash() throws Exception
 	{
-		List<String> yetToParse = option.parse(Arrays.asList("o"));
+		List<String> yetToParse = option.parse(asList("o"));
 		
 		assertFalse(option.getIsSet());
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
 	public void parseCanHandleConcatenatedOptions() throws Exception
 	{
-		List<String> yetToParse = option.parse(Arrays.asList("-ou"));
+		List<String> yetToParse = option.parse(asList("-ou"));
 		
 		assertTrue(option.getIsSet());
-		assertEquals(Arrays.asList("-u"), yetToParse);
+		assertEquals(asList("-u"), yetToParse);
 	}
 	
 	@Test
 	public void parseCanHandleConcatenatedOptions2() throws Exception
 	{
-		List<String> yetToParse = option.parse(Arrays.asList("-uo"));
+		List<String> yetToParse = option.parse(asList("-uo"));
 		
 		assertTrue(option.getIsSet());
-		assertEquals(Arrays.asList("-u"), yetToParse);
+		assertEquals(asList("-u"), yetToParse);
 	}
 }

@@ -1,8 +1,10 @@
 package crehn.argumentparser;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 
-import java.util.*;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,7 @@ public class OptionListTest
 	public void setup()
 	{
 		optionList = new OptionList();
-		args = Collections.emptyList();
+		args = emptyList();
 	}
 	
 	private void givenSpecifiedOptions(char... options)
@@ -27,7 +29,7 @@ public class OptionListTest
 	
 	private void givenArguments(String... arguments)
 	{
-		args = Arrays.asList(arguments);
+		args = asList(arguments);
 	}
 	
 	@Test
@@ -35,7 +37,7 @@ public class OptionListTest
 	{
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -73,7 +75,7 @@ public class OptionListTest
 		
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
@@ -84,7 +86,7 @@ public class OptionListTest
 		
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
@@ -95,7 +97,7 @@ public class OptionListTest
 		
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Arrays.asList("-v"), yetToParse);
+		assertEquals(asList("-v"), yetToParse);
 	}
 	
 	@Test
@@ -106,7 +108,7 @@ public class OptionListTest
 		
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
@@ -117,7 +119,7 @@ public class OptionListTest
 		
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
@@ -128,7 +130,7 @@ public class OptionListTest
 		
 		List<String> yetToParse = optionList.parse(args);
 		
-		assertEquals(Arrays.asList("-v"), yetToParse);
+		assertEquals(asList("-v"), yetToParse);
 	}
 	
 }

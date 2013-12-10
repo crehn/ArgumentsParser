@@ -1,8 +1,11 @@
 package crehn.argumentparser;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.*;
 
@@ -19,7 +22,7 @@ public class ParameterListTest
 	
 	private void givenArguments(String... arguments)
 	{
-		this.arguments = Arrays.asList(arguments);
+		this.arguments = asList(arguments);
 	}
 	
 	private void givenParameters(char... parameters)
@@ -33,7 +36,7 @@ public class ParameterListTest
 	{
 		List<String> yetToParse = parameterList.parse(Collections.<String> emptyList());
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Ignore
@@ -78,7 +81,7 @@ public class ParameterListTest
 		givenArguments("-p", "value");
 		List<String> yetToParse = parameterList.parse(arguments);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
@@ -88,27 +91,17 @@ public class ParameterListTest
 		givenArguments("-p", "pvalue", "-q", "qvalue");
 		List<String> yetToParse = parameterList.parse(arguments);
 		
-		assertEquals(Collections.emptyList(), yetToParse);
+		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
-	public void parseHandles2Options2() throws Exception
+	public void parseHandles2Parameters2() throws Exception
 	{
-	}
-	
-	@Test
-	public void parseHandlesConcatenatedOptions() throws Exception
-	{
-	}
-	
-	@Test
-	public void parseHandlesConcatenatedOptions2() throws Exception
-	{
-	}
-	
-	@Test
-	public void parseHandlesConcatenatedOptions3() throws Exception
-	{
+		givenParameters('p', 'q');
+		givenArguments("-p", "pvalue", "-q", "qvalue", "additional value");
+		List<String> yetToParse = parameterList.parse(arguments);
+		
+		assertEquals(asList("additional value"), yetToParse);
 	}
 	
 }
