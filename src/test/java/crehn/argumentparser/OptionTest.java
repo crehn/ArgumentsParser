@@ -22,7 +22,7 @@ public class OptionTest
 	@Test
 	public void initiallyValueIsUnknown() throws Exception
 	{
-		assertNull(option.getIsSet());
+		assertFalse(option.getIsSet());
 	}
 	
 	@Test

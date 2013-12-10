@@ -7,7 +7,7 @@ import java.util.List;
 public class ArgumentParser
 {
 	private String[] args;
-	private final OptionList specifiedOptions = new OptionList();
+	private final OptionList options = new OptionList();
 	private final ParameterList specifiedParameters = new ParameterList();
 	
 	public void parse(String[] args) throws ArgumentParsingException
@@ -16,7 +16,7 @@ public class ArgumentParser
 		while (!yetToParse.isEmpty())
 		{
 			int sizeBefore = yetToParse.size();
-			yetToParse = specifiedOptions.parse(yetToParse);
+			yetToParse = options.parse(yetToParse);
 			yetToParse = specifiedParameters.parse(yetToParse);
 			if (!sizeHasChanged(yetToParse, sizeBefore))
 			{
@@ -45,18 +45,7 @@ public class ArgumentParser
 		if (args == null)
 			throw new IllegalStateException("You need to call parse() first.");
 		
-		for (String arg : args)
-		{
-			if (looksLikeOptions(arg))
-			{
-				for (char c : arg.toCharArray())
-				{
-					if (c == option)
-						return true;
-				}
-			}
-		}
-		return false;
+		return options.isOptionSet(option);
 	}
 	
 	public String getParameter(char c)
@@ -79,16 +68,16 @@ public class ArgumentParser
 	
 	public void specifyOption(char option)
 	{
-		if (specifiedOptions.isSpecifiedOption(option) || specifiedParameters.isSpecifiedParameter(option))
+		if (options.isSpecifiedOption(option) || specifiedParameters.isSpecifiedParameter(option))
 			throw new IllegalArgumentException("Argument already specified: " + option);
 		
-		specifiedOptions.add(new Option(option));
+		options.add(new Option(option));
 	}
 	
 	public void specifyParameter(char parameterName)
 	{
 		if (specifiedParameters.isSpecifiedParameter(parameterName)
-				|| specifiedOptions.isSpecifiedOption(parameterName))
+				|| options.isSpecifiedOption(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
 		specifiedParameters.add(new Parameter(parameterName));

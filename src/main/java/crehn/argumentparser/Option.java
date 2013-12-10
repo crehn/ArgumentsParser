@@ -9,7 +9,7 @@ import lombok.Data;
 public class Option
 {
 	private final char name;
-	private Boolean isSet = null;
+	private Boolean isSet = false;
 	
 	public List<String> parse(List<String> yetToParse)
 	{

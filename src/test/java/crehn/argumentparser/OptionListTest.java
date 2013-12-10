@@ -2,7 +2,7 @@ package crehn.argumentparser;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -46,6 +46,20 @@ public class OptionListTest
 		optionList.parse(null);
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void isOptionSetThrowsWhenOptionNotSpecified() throws Exception
+	{
+		assertFalse(optionList.isOptionSet('o'));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void isOptionSetThrowsWhenOptionNotSpecified2() throws Exception
+	{
+		givenArguments("-o");
+		optionList.parse(args);
+		assertFalse(optionList.isOptionSet('o'));
+	}
+	
 	@Test
 	public void parseReturnsIdentityWhenNoOptionSpecified() throws Exception
 	{
@@ -65,6 +79,7 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(args, yetToParse);
+		assertFalse(optionList.isOptionSet('o'));
 	}
 	
 	@Test
@@ -76,6 +91,7 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
+		assertTrue(optionList.isOptionSet('o'));
 	}
 	
 	@Test
@@ -87,6 +103,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
+		assertTrue(optionList.isOptionSet('o'));
+		assertTrue(optionList.isOptionSet('u'));
 	}
 	
 	@Test
@@ -98,6 +116,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(asList("-v"), yetToParse);
+		assertTrue(optionList.isOptionSet('o'));
+		assertTrue(optionList.isOptionSet('u'));
 	}
 	
 	@Test
@@ -109,6 +129,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
+		assertTrue(optionList.isOptionSet('o'));
+		assertTrue(optionList.isOptionSet('u'));
 	}
 	
 	@Test
@@ -120,6 +142,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
+		assertTrue(optionList.isOptionSet('o'));
+		assertTrue(optionList.isOptionSet('u'));
 	}
 	
 	@Test
@@ -131,6 +155,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(asList("-v"), yetToParse);
+		assertTrue(optionList.isOptionSet('o'));
+		assertTrue(optionList.isOptionSet('u'));
 	}
 	
 }

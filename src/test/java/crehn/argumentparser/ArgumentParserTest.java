@@ -21,9 +21,18 @@ public class ArgumentParserTest
 		parser.isOptionSet('c');
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void isOptionSetThrowsWhenOptionNotSpecified() throws Exception
+	{
+		parser.parse(new String[] {});
+		
+		assertFalse(parser.isOptionSet('o'));
+	}
+	
 	@Test
 	public void isOptionSetReturnsFalseForEmptyArgs() throws Exception
 	{
+		parser.specifyOption('o');
 		parser.parse(new String[] {});
 		
 		assertFalse(parser.isOptionSet('o'));

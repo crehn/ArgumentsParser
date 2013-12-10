@@ -36,4 +36,23 @@ public class OptionList extends ArrayList<Option>
 		return null;
 	}
 	
+	public Boolean isOptionSet(char optionName)
+	{
+		Option option = getOptionByName(optionName);
+		if (option == null)
+			throw new IllegalArgumentException("Unknown Option: " + optionName);
+		
+		return option.getIsSet();
+	}
+	
+	private Option getOptionByName(char optionName)
+	{
+		for (Option option : this)
+		{
+			if (option.getName() == optionName)
+				return option;
+		}
+		return null;
+	}
+	
 }
