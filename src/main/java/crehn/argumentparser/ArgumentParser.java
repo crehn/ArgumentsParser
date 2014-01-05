@@ -8,7 +8,7 @@ public class ArgumentParser
 {
 	private String[] args;
 	private final OptionList options = new OptionList();
-	private final ParameterList parameters = new ParameterList();
+	private final ArgumentList<String> parameters = new ArgumentList<>();
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
@@ -53,12 +53,12 @@ public class ArgumentParser
 		if (args == null)
 			throw new IllegalStateException("You need to call parse() first.");
 		
-		return parameters.getByName(paramName);
+		return parameters.getValueByName(paramName);
 	}
 	
 	public void specifyOption(char option)
 	{
-		if (options.isSpecifiedOption(option) || parameters.isSpecifiedParameter(option))
+		if (options.isSpecifiedOption(option) || parameters.isSpecified(option))
 			throw new IllegalArgumentException("Argument already specified: " + option);
 		
 		options.add(new Option(option));
@@ -66,7 +66,7 @@ public class ArgumentParser
 	
 	public void specifyParameter(char parameterName)
 	{
-		if (parameters.isSpecifiedParameter(parameterName) || options.isSpecifiedOption(parameterName))
+		if (parameters.isSpecified(parameterName) || options.isSpecifiedOption(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
 		parameters.add(new Parameter(parameterName));

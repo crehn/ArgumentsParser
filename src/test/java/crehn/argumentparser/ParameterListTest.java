@@ -13,13 +13,13 @@ import org.junit.Test;
 
 public class ParameterListTest
 {
-	ParameterList parameterList;
+	ArgumentList<String> parameterList;
 	private List<String> arguments;
 	
 	@Before
 	public void setup()
 	{
-		parameterList = new ParameterList();
+		parameterList = new ArgumentList<>();
 	}
 	
 	private void givenArguments(String... arguments)
@@ -62,7 +62,7 @@ public class ParameterListTest
 		givenArguments("-p");
 		parameterList.parse(arguments);
 		
-		parameterList.getByName('p');
+		parameterList.getValueByName('p');
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(arguments, yetToParse);
-		assertNull(parameterList.getByName('p'));
+		assertNull(parameterList.getValueByName('p'));
 	}
 	
 	@Test(expected = ParameterValueMissingException.class)
@@ -93,7 +93,7 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertEquals("value", parameterList.getByName('p'));
+		assertEquals("value", parameterList.getValueByName('p'));
 	}
 	
 	@Test
@@ -104,8 +104,8 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertEquals("pvalue", parameterList.getByName('p'));
-		assertEquals("qvalue", parameterList.getByName('q'));
+		assertEquals("pvalue", parameterList.getValueByName('p'));
+		assertEquals("qvalue", parameterList.getValueByName('q'));
 	}
 	
 	@Test
@@ -116,8 +116,8 @@ public class ParameterListTest
 		List<String> yetToParse = parameterList.parse(arguments);
 		
 		assertEquals(asList("additional value"), yetToParse);
-		assertEquals("pvalue", parameterList.getByName('p'));
-		assertEquals("qvalue", parameterList.getByName('q'));
+		assertEquals("pvalue", parameterList.getValueByName('p'));
+		assertEquals("qvalue", parameterList.getValueByName('q'));
 	}
 	
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Option implements Argument
+public class Option implements Argument<Boolean>
 {
 	private final char name;
 	private Boolean isSet = false;
@@ -57,5 +57,11 @@ public class Option implements Argument
 	private boolean looksLikeOptions(String argument)
 	{
 		return argument.startsWith("-");
+	}
+	
+	@Override
+	public Boolean getValue()
+	{
+		return getIsSet();
 	}
 }

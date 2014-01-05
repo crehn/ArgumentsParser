@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Parameter implements Argument
+public class Parameter implements Argument<String>
 {
 	private final char name;
 	private String value;
