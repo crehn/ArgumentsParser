@@ -5,10 +5,10 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Parameter implements Argument<String>
+public abstract class AbstractParameter<T> implements Argument<T>
 {
 	private final char name;
-	private String value;
+	private T value;
 	
 	@Override
 	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException
@@ -18,9 +18,11 @@ public class Parameter implements Argument<String>
 		if (yetToParse.size() == 1)
 			throw new ParameterValueMissingException(yetToParse.get(0));
 		
-		value = yetToParse.get(1);
+		value = convertType(yetToParse.get(1));
 		return yetToParse.subList(2, yetToParse.size());
 	}
+	
+	protected abstract T convertType(String string);
 	
 	@Override
 	public boolean canHandle(List<String> yetToParse)

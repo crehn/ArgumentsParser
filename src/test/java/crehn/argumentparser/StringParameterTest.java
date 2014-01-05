@@ -10,15 +10,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ParameterTest
+public class StringParameterTest
 {
-	Parameter parameter;
+	StringParameter parameter;
 	private List<String> arguments;
 	
 	@Before
 	public void setup()
 	{
-		parameter = new Parameter('p');
+		parameter = new StringParameter('p');
 	}
 	
 	private void givenArguments(String... arguments)

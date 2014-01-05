@@ -62,7 +62,7 @@ public class ArgumentParser
 		if (arguments.isSpecified(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
-		arguments.add(new Parameter(parameterName));
+		arguments.add(new StringParameter(parameterName));
 	}
 	
 }

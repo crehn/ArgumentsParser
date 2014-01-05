@@ -30,7 +30,7 @@ public class ParameterListTest
 	private void givenParameters(char... parameters)
 	{
 		for (char p : parameters)
-			parameterList.add(new Parameter(p));
+			parameterList.add(new StringParameter(p));
 	}
 	
 	@Test
