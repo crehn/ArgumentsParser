@@ -12,7 +12,7 @@ public class ParameterList extends ArrayList<Parameter>
 		return contains(new Parameter(paramName));
 	}
 	
-	public List<String> parse(List<String> yetToParse) throws ParameterValueMissingException
+	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException
 	{
 		Parameter parameter = getParameterByArgument(yetToParse);
 		if (parameter == null)

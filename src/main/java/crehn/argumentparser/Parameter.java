@@ -5,12 +5,13 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Parameter
+public class Parameter implements Argument
 {
 	private final char name;
 	private String value;
 	
-	public List<String> parse(List<String> yetToParse) throws ParameterValueMissingException
+	@Override
+	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException
 	{
 		if (!canHandle(yetToParse))
 			return yetToParse;
@@ -21,6 +22,7 @@ public class Parameter
 		return yetToParse.subList(2, yetToParse.size());
 	}
 	
+	@Override
 	public boolean canHandle(List<String> yetToParse)
 	{
 		if (yetToParse.isEmpty())

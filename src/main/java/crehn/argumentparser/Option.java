@@ -6,11 +6,12 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Option
+public class Option implements Argument
 {
 	private final char name;
 	private Boolean isSet = false;
 	
+	@Override
 	public List<String> parse(List<String> yetToParse)
 	{
 		String firstArgument = yetToParse.get(0);
@@ -43,6 +44,7 @@ public class Option
 		return argument.replaceFirst("" + this.name, "");
 	}
 	
+	@Override
 	public boolean canHandle(List<String> yetToParse)
 	{
 		String firstArgument = yetToParse.get(0);
