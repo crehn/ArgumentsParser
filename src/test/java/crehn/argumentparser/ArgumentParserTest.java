@@ -15,10 +15,12 @@ public class ArgumentParserTest
 		parser = new ArgumentParser();
 	}
 	
-	@Test(expected = IllegalStateException.class)
-	public void isOptionSetThrowsWhenParseNotCalled() throws Exception
+	@Test
+	public void isOptionSetRetrurnsFalseWhenParseNotCalled() throws Exception
 	{
-		parser.isOptionSet('c');
+		parser.specifyOption('o');
+		
+		assertFalse(parser.isOptionSet('o'));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -107,10 +109,12 @@ public class ArgumentParserTest
 		assertTrue(parser.isOptionSet('u'));
 	}
 	
-	@Test(expected = IllegalStateException.class)
-	public void getParameterThrowsWhenParseNotCalled() throws Exception
+	@Test
+	public void getParameterReturnsNullWhenParseNotCalled() throws Exception
 	{
-		parser.getParameter('c');
+		parser.specifyParameter('p');
+		
+		assertNull(parser.getParameter('p'));
 	}
 	
 	@Test

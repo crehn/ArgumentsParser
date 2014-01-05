@@ -4,11 +4,12 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+// due to type erasure it's impossible to use type arguments for the arguments
+// list, so raw types are used and the warnings are ignored
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ArgumentParser
 {
-	private String[] args;
-	private final ArgumentList<Boolean> options = new ArgumentList<>();
-	private final ArgumentList<String> parameters = new ArgumentList<>();
+	private final ArgumentList arguments = new ArgumentList();
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
@@ -16,8 +17,7 @@ public class ArgumentParser
 		while (!yetToParse.isEmpty())
 		{
 			int sizeBefore = yetToParse.size();
-			yetToParse = options.parse(yetToParse);
-			yetToParse = parameters.parse(yetToParse);
+			yetToParse = arguments.parse(yetToParse);
 			if (!sizeHasChanged(yetToParse, sizeBefore))
 			{
 				if (looksLikeOptions(yetToParse.get(0)))
@@ -26,8 +26,6 @@ public class ArgumentParser
 					throw new UnexpectedArgumentException(yetToParse.get(0));
 			}
 		}
-		
-		this.args = args;
 	}
 	
 	private boolean sizeHasChanged(List<String> yetToParse, int sizeBefore)
@@ -42,34 +40,29 @@ public class ArgumentParser
 	
 	public boolean isOptionSet(char option)
 	{
-		if (args == null)
-			throw new IllegalStateException("You need to call parse() first.");
-		
-		return options.getValueByName(option);
+		Object value = arguments.getValueByName(option);
+		return value instanceof Boolean && (Boolean) value;
 	}
 	
-	public String getParameter(char paramName)
+	public <T> T getParameter(char paramName)
 	{
-		if (args == null)
-			throw new IllegalStateException("You need to call parse() first.");
-		
-		return parameters.getValueByName(paramName);
+		return (T) arguments.getValueByName(paramName);
 	}
 	
-	public void specifyOption(char option)
+	public void specifyOption(char optionName)
 	{
-		if (options.isSpecified(option) || parameters.isSpecified(option))
-			throw new IllegalArgumentException("Argument already specified: " + option);
+		if (arguments.isSpecified(optionName))
+			throw new IllegalArgumentException("Argument already specified: " + optionName);
 		
-		options.add(new Option(option));
+		arguments.add(new Option(optionName));
 	}
 	
 	public void specifyParameter(char parameterName)
 	{
-		if (parameters.isSpecified(parameterName) || options.isSpecified(parameterName))
+		if (arguments.isSpecified(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
-		parameters.add(new Parameter(parameterName));
+		arguments.add(new Parameter(parameterName));
 	}
 	
 }
