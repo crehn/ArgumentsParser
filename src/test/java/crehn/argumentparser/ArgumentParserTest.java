@@ -131,11 +131,19 @@ public class ArgumentParserTest
 	}
 	
 	@Test(expected = NumberFormatException.class)
-	public void parseThrowsWhenWrongParameterType() throws Exception
+	public void parseThrowsWhenWrongParameterTypeInteger() throws Exception
 	{
 		parser.specifyIntegerParameter('p');
 		
 		parser.parse(new String[] { "-p", "not an int" });
+	}
+	
+	@Test(expected = NumberFormatException.class)
+	public void parseThrowsWhenWrongParameterTypeDouble() throws Exception
+	{
+		parser.specifyDoubleParameter('p');
+		
+		parser.parse(new String[] { "-p", "not a double" });
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
@@ -200,5 +208,18 @@ public class ArgumentParserTest
 		
 		assertEquals(42, parser.getParameter('p'));
 		assertEquals(Integer.valueOf(42), parser.<Integer> getParameter('p'));
+	}
+	
+	@Test
+	public void getParameterReturnsDoubleValueWhenSet() throws Exception
+	{
+		parser.specifyDoubleParameter('p');
+		parser.specifyDoubleParameter('q');
+		parser.parse(new String[] { "-p", "42", "-q", "12.34" });
+		
+		assertEquals(42.0, parser.getParameter('p'));
+		assertEquals(Double.valueOf(42), parser.<Double> getParameter('p'));
+		assertEquals(12.34, parser.getParameter('q'));
+		assertEquals(Double.valueOf(12.34), parser.<Double> getParameter('q'));
 	}
 }

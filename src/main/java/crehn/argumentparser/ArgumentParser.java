@@ -73,4 +73,13 @@ public class ArgumentParser
 		arguments.add(new IntegerParameter(parameterName));
 	}
 	
+	public void specifyDoubleParameter(char parameterName)
+	{
+		if (arguments.isSpecified(parameterName))
+			throw new IllegalArgumentException("Argument already specified: " + parameterName);
+		
+		arguments.add(new DoubleParameter(parameterName));
+		
+	}
+	
 }
