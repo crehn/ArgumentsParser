@@ -11,13 +11,13 @@ import org.junit.Test;
 
 public class OptionListTest
 {
-	private OptionList optionList;
+	private ArgumentList<Boolean> optionList;
 	private List<String> args;
 	
 	@Before
 	public void setup()
 	{
-		optionList = new OptionList();
+		optionList = new ArgumentList<>();
 		args = emptyList();
 	}
 	
@@ -49,7 +49,7 @@ public class OptionListTest
 	@Test(expected = IllegalArgumentException.class)
 	public void isOptionSetThrowsWhenOptionNotSpecified() throws Exception
 	{
-		assertFalse(optionList.isOptionSet('o'));
+		assertFalse(optionList.getValueByName('o'));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -57,7 +57,7 @@ public class OptionListTest
 	{
 		givenArguments("-o");
 		optionList.parse(args);
-		assertFalse(optionList.isOptionSet('o'));
+		assertFalse(optionList.getValueByName('o'));
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(args, yetToParse);
-		assertFalse(optionList.isOptionSet('o'));
+		assertFalse(optionList.getValueByName('o'));
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertTrue(optionList.isOptionSet('o'));
+		assertTrue(optionList.getValueByName('o'));
 	}
 	
 	@Test
@@ -103,8 +103,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertTrue(optionList.isOptionSet('o'));
-		assertTrue(optionList.isOptionSet('u'));
+		assertTrue(optionList.getValueByName('o'));
+		assertTrue(optionList.getValueByName('u'));
 	}
 	
 	@Test
@@ -116,8 +116,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(asList("-v"), yetToParse);
-		assertTrue(optionList.isOptionSet('o'));
-		assertTrue(optionList.isOptionSet('u'));
+		assertTrue(optionList.getValueByName('o'));
+		assertTrue(optionList.getValueByName('u'));
 	}
 	
 	@Test
@@ -129,8 +129,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertTrue(optionList.isOptionSet('o'));
-		assertTrue(optionList.isOptionSet('u'));
+		assertTrue(optionList.getValueByName('o'));
+		assertTrue(optionList.getValueByName('u'));
 	}
 	
 	@Test
@@ -142,8 +142,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertTrue(optionList.isOptionSet('o'));
-		assertTrue(optionList.isOptionSet('u'));
+		assertTrue(optionList.getValueByName('o'));
+		assertTrue(optionList.getValueByName('u'));
 	}
 	
 	@Test
@@ -155,8 +155,8 @@ public class OptionListTest
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(asList("-v"), yetToParse);
-		assertTrue(optionList.isOptionSet('o'));
-		assertTrue(optionList.isOptionSet('u'));
+		assertTrue(optionList.getValueByName('o'));
+		assertTrue(optionList.getValueByName('u'));
 	}
 	
 }
