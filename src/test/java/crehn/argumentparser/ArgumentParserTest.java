@@ -15,12 +15,25 @@ public class ArgumentParserTest
 		parser = new ArgumentParser();
 	}
 	
-	@Test
-	public void isOptionSetRetrurnsFalseWhenParseNotCalled() throws Exception
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingOptionTwiceThrows() throws Exception
 	{
 		parser.specifyOption('o');
-		
-		assertFalse(parser.isOptionSet('o'));
+		parser.specifyOption('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingParameterTwiceThrows() throws Exception
+	{
+		parser.specifyStringParameter('o');
+		parser.specifyStringParameter('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void conflictingSpecificationThrows2() throws Exception
+	{
+		parser.specifyStringParameter('o');
+		parser.specifyOption('o');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -32,18 +45,20 @@ public class ArgumentParserTest
 	}
 	
 	@Test
+	public void isOptionSetRetrurnsFalseWhenParseNotCalled() throws Exception
+	{
+		parser.specifyOption('o');
+		
+		assertFalse(parser.isOptionSet('o'));
+	}
+	
+	@Test
 	public void isOptionSetReturnsFalseForEmptyArgs() throws Exception
 	{
 		parser.specifyOption('o');
 		parser.parse(new String[] {});
 		
 		assertFalse(parser.isOptionSet('o'));
-	}
-	
-	@Test(expected = UnexpectedArgumentException.class)
-	public void parseThrowsWhenUnexpectedArguments() throws Exception
-	{
-		parser.parse(new String[] { "dummy text" });
 	}
 	
 	@Test
@@ -63,28 +78,6 @@ public class ArgumentParserTest
 		parser.parse(new String[] { "-o" });
 		
 		assertFalse(parser.isOptionSet('u'));
-	}
-	
-	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenUnspecifiedOption() throws Exception
-	{
-		parser.parse(new String[] { "-o" });
-	}
-	
-	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenAFurtherUnspecifiedOption() throws Exception
-	{
-		parser.specifyOption('o');
-		
-		parser.parse(new String[] { "-o", "-u" });
-	}
-	
-	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenAFurtherUnspecifiedConcatenatedOption() throws Exception
-	{
-		parser.specifyOption('o');
-		
-		parser.parse(new String[] { "-ou" });
 	}
 	
 	@Test
@@ -109,21 +102,47 @@ public class ArgumentParserTest
 		assertTrue(parser.isOptionSet('u'));
 	}
 	
-	@Test
-	public void getParameterReturnsNullWhenParseNotCalled() throws Exception
+	@Test(expected = UnknownArgumentException.class)
+	public void parseThrowsWhenUnspecifiedOption() throws Exception
 	{
-		parser.specifyParameter('p');
-		
-		assertNull(parser.getParameter('p'));
+		parser.parse(new String[] { "-o" });
 	}
 	
-	@Test
-	public void getParameterReturnsNullWhenNotSet() throws Exception
+	@Test(expected = UnknownArgumentException.class)
+	public void parseThrowsWhenAFurtherUnspecifiedOption() throws Exception
 	{
-		parser.specifyParameter('p');
-		parser.parse(new String[] {});
+		parser.specifyOption('o');
 		
-		assertNull(parser.getParameter('p'));
+		parser.parse(new String[] { "-o", "-u" });
+	}
+	
+	@Test(expected = UnknownArgumentException.class)
+	public void parseThrowsWhenAFurtherUnspecifiedConcatenatedOption() throws Exception
+	{
+		parser.specifyOption('o');
+		
+		parser.parse(new String[] { "-ou" });
+	}
+	
+	@Test(expected = UnexpectedArgumentException.class)
+	public void parseThrowsWhenUnexpectedArguments() throws Exception
+	{
+		parser.parse(new String[] { "dummy text" });
+	}
+	
+	@Test(expected = NumberFormatException.class)
+	public void parseThrowsWhenWrongParameterType() throws Exception
+	{
+		parser.specifyIntegerParameter('p');
+		
+		parser.parse(new String[] { "-p", "not an int" });
+	}
+	
+	@Test(expected = UnexpectedArgumentException.class)
+	public void parseThrowsIfTwoParameterValues() throws Exception
+	{
+		parser.specifyStringParameter('p');
+		parser.parse(new String[] { "-p", "one", "two" });
 	}
 	
 	@Test(expected = ArgumentParsingException.class)
@@ -132,55 +151,54 @@ public class ArgumentParserTest
 		parser.parse(new String[] { "-p", "value" });
 	}
 	
-	@Test
-	public void getParameterReturnsValueWhenSet() throws Exception
-	{
-		parser.specifyParameter('p');
-		parser.parse(new String[] { "-p", "value" });
-		
-		assertEquals("value", parser.getParameter('p'));
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void specifyingOptionTwiceThrows() throws Exception
-	{
-		parser.specifyOption('o');
-		parser.specifyOption('o');
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void specifyingParameterTwiceThrows() throws Exception
-	{
-		parser.specifyParameter('o');
-		parser.specifyParameter('o');
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void conflictingSpecificationThrows2() throws Exception
-	{
-		parser.specifyParameter('o');
-		parser.specifyOption('o');
-	}
-	
-	@Test(expected = UnexpectedArgumentException.class)
-	public void parseThrowsIfTwoParameterValues() throws Exception
-	{
-		parser.specifyParameter('p');
-		parser.parse(new String[] { "-p", "one", "two" });
-	}
-	
 	@Test(expected = ParameterValueMissingException.class)
 	public void getParameterThrowsWhenArgumentMissing() throws Exception
 	{
-		parser.specifyParameter('p');
+		parser.specifyStringParameter('p');
 		parser.parse(new String[] { "-p" });
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
 	public void getParameterThrowsWhenArgumentMissing2() throws Exception
 	{
-		parser.specifyParameter('p');
+		parser.specifyStringParameter('p');
 		parser.specifyOption('o');
 		parser.parse(new String[] { "-p", "-o", "value" });
+	}
+	
+	@Test
+	public void getParameterReturnsNullWhenParseNotCalled() throws Exception
+	{
+		parser.specifyStringParameter('p');
+		
+		assertNull(parser.getParameter('p'));
+	}
+	
+	@Test
+	public void getParameterReturnsNullWhenNotSet() throws Exception
+	{
+		parser.specifyStringParameter('p');
+		parser.parse(new String[] {});
+		
+		assertNull(parser.getParameter('p'));
+	}
+	
+	@Test
+	public void getParameterReturnsStringValueWhenSet() throws Exception
+	{
+		parser.specifyStringParameter('p');
+		parser.parse(new String[] { "-p", "value" });
+		
+		assertEquals("value", parser.getParameter('p'));
+	}
+	
+	@Test
+	public void getParameterReturnsIntegerValueWhenSet() throws Exception
+	{
+		parser.specifyIntegerParameter('p');
+		parser.parse(new String[] { "-p", "42" });
+		
+		assertEquals(42, parser.getParameter('p'));
+		assertEquals(Integer.valueOf(42), parser.<Integer> getParameter('p'));
 	}
 }

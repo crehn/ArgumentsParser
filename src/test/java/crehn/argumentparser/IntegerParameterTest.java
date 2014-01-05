@@ -9,15 +9,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StringParameterTest
+public class IntegerParameterTest
 {
-	StringParameter parameter;
+	IntegerParameter parameter;
 	private List<String> arguments;
 	
 	@Before
 	public void setup()
 	{
-		parameter = new StringParameter('p');
+		parameter = new IntegerParameter('p');
 	}
 	
 	private void givenArguments(String... arguments)
@@ -26,13 +26,22 @@ public class StringParameterTest
 	}
 	
 	@Test
-	public void parseStringValue() throws Exception
+	public void parseIntegerValue() throws Exception
 	{
-		givenArguments("-p", "value");
+		givenArguments("-p", "42");
 		
 		List<String> yetToParse = parameter.parse(arguments);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertEquals("value", parameter.getValue());
+		assertEquals(Integer.valueOf(42), parameter.getValue());
 	}
+	
+	@Test(expected = NumberFormatException.class)
+	public void throwWhenStringValue() throws Exception
+	{
+		givenArguments("-p", "not an int");
+		
+		parameter.parse(arguments);
+	}
+	
 }

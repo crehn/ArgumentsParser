@@ -57,12 +57,20 @@ public class ArgumentParser
 		arguments.add(new Option(optionName));
 	}
 	
-	public void specifyParameter(char parameterName)
+	public void specifyStringParameter(char parameterName)
 	{
 		if (arguments.isSpecified(parameterName))
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
 		arguments.add(new StringParameter(parameterName));
+	}
+	
+	public void specifyIntegerParameter(char parameterName)
+	{
+		if (arguments.isSpecified(parameterName))
+			throw new IllegalArgumentException("Argument already specified: " + parameterName);
+		
+		arguments.add(new IntegerParameter(parameterName));
 	}
 	
 }
