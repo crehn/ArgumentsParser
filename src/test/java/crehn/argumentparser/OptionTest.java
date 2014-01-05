@@ -28,31 +28,31 @@ public class OptionTest
 	@Test
 	public void canHandleReturnsFalseForEmptyString() throws Exception
 	{
-		assertFalse(option.canHandle(""));
+		assertFalse(option.canHandle(asList("")));
 	}
 	
 	@Test
 	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception
 	{
-		assertFalse(option.canHandle("o"));
+		assertFalse(option.canHandle(asList("o")));
 	}
 	
 	@Test
 	public void canHandleReturnsFalseWhenOtherChar() throws Exception
 	{
-		assertFalse(option.canHandle("-u"));
+		assertFalse(option.canHandle(asList("-u")));
 	}
 	
 	@Test
 	public void canHandleReturnsTrue() throws Exception
 	{
-		assertTrue(option.canHandle("-o"));
+		assertTrue(option.canHandle(asList("-o")));
 	}
 	
 	@Test
 	public void canHandleReturnsTrueForConcatenatedOptions() throws Exception
 	{
-		assertTrue(option.canHandle("-ou"));
+		assertTrue(option.canHandle(asList("-ou")));
 	}
 	
 	@Test

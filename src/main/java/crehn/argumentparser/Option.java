@@ -43,12 +43,13 @@ public class Option
 		return argument.replaceFirst("" + this.name, "");
 	}
 	
-	public boolean canHandle(String argument)
+	public boolean canHandle(List<String> yetToParse)
 	{
-		if (!looksLikeOptions(argument))
+		String firstArgument = yetToParse.get(0);
+		if (!looksLikeOptions(firstArgument))
 			return false;
 		
-		return optionPartOf(argument).contains("" + this.name);
+		return optionPartOf(firstArgument).contains("" + this.name);
 	}
 	
 	private boolean looksLikeOptions(String argument)

@@ -29,8 +29,7 @@ public class OptionList extends ArrayList<Option>
 		
 		for (Option option : this)
 		{
-			String firstArgument = yetToParse.get(0);
-			if (option.canHandle(firstArgument))
+			if (option.canHandle(yetToParse))
 				return option;
 		}
 		return null;
