@@ -1,5 +1,6 @@
 package crehn.argumentparser;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -30,10 +31,38 @@ public class ArgumentParserTest
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void conflictingSpecificationThrows2() throws Exception
+	public void specifyingParameterTwiceThrows2() throws Exception
+	{
+		parser.specifyStringParameter('o');
+		parser.specifyIntegerParameter('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingParameterTwiceThrows3() throws Exception
+	{
+		parser.specifyStringParameter('o');
+		parser.specifyDoubleParameter('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingParameterTwiceThrows4() throws Exception
+	{
+		parser.specifyStringParameter('o');
+		parser.specifyStringListParameter('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void conflictingOptionSpecificationThrows() throws Exception
 	{
 		parser.specifyStringParameter('o');
 		parser.specifyOption('o');
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void specifyingTwoListParametersThrows() throws Exception
+	{
+		parser.specifyStringListParameter('o');
+		parser.specifyStringListParameter('p');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -221,5 +250,14 @@ public class ArgumentParserTest
 		assertEquals(Double.valueOf(42), parser.<Double> getParameter('p'));
 		assertEquals(12.34, parser.getParameter('q'));
 		assertEquals(Double.valueOf(12.34), parser.<Double> getParameter('q'));
+	}
+	
+	@Test
+	public void getParameterReturnsStringListValueWhenSet() throws Exception
+	{
+		parser.specifyStringListParameter('p');
+		parser.parse(new String[] { "-p", "42", "-q", "12.34" });
+		
+		assertEquals(asList("42", "-q", "12.34"), parser.getParameter('p'));
 	}
 }

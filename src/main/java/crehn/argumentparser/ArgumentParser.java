@@ -10,6 +10,7 @@ import java.util.List;
 public class ArgumentParser
 {
 	private final ArgumentList arguments = new ArgumentList();
+	private boolean catchAllArgAlreadySpecified = false;
 	
 	public void parse(String[] args) throws ArgumentParsingException
 	{
@@ -79,7 +80,15 @@ public class ArgumentParser
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
 		arguments.add(new DoubleParameter(parameterName));
+	}
+	
+	public void specifyStringListParameter(char parameterName)
+	{
+		if (arguments.isSpecified(parameterName) || catchAllArgAlreadySpecified)
+			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
+		arguments.add(new StringListParameter(parameterName));
+		catchAllArgAlreadySpecified = true;
 	}
 	
 }

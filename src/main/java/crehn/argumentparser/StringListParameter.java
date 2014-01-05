@@ -1,28 +1,26 @@
 package crehn.argumentparser;
 
+import static java.util.Collections.emptyList;
+
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public abstract class AbstractParameter<T> implements Argument<T>
+public class StringListParameter implements Argument<List<String>>
 {
 	private final char name;
-	private T value;
+	private List<String> value;
 	
 	@Override
-	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException
+	public List<String> parse(List<String> yetToParse)
 	{
 		if (!canHandle(yetToParse))
 			return yetToParse;
-		if (yetToParse.size() == 1)
-			throw new ParameterValueMissingException(yetToParse.get(0));
 		
-		value = convertType(yetToParse.get(1));
-		return yetToParse.subList(2, yetToParse.size());
+		value = yetToParse.subList(1, yetToParse.size());
+		return emptyList();
 	}
-	
-	protected abstract T convertType(String string);
 	
 	@Override
 	public boolean canHandle(List<String> yetToParse)
