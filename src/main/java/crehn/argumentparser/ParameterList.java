@@ -46,10 +46,10 @@ public class ParameterList extends ArrayList<Parameter>
 	
 	private Parameter getParameterByName(char paramName)
 	{
-		for (Parameter p : this)
+		for (Parameter param : this)
 		{
-			if (p.getName() == paramName)
-				return p;
+			if (param.getName() == paramName)
+				return param;
 		}
 		return null;
 	}
