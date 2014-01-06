@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Option implements Argument<Boolean>
+class Option implements Argument<Boolean>
 {
 	private final char name;
 	private Boolean isSet = false;

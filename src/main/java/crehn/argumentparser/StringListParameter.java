@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class StringListParameter implements Argument<List<String>>
+class StringListParameter implements Argument<List<String>>
 {
 	private final char name;
 	private List<String> value;

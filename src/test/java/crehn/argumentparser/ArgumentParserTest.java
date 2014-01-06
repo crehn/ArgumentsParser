@@ -239,6 +239,16 @@ public class ArgumentParserTest
 		assertEquals(Integer.valueOf(42), parser.<Integer> getParameter('p'));
 	}
 	
+	@Test(expected = ClassCastException.class)
+	public void getParameterThrowsWhenWrongTypeRequested() throws Exception
+	{
+		parser.specifyIntegerParameter('p');
+		parser.parse(new String[] { "-p", "42" });
+		
+		@SuppressWarnings("unused")
+		String d = parser.<String> getParameter('p');
+	}
+	
 	@Test
 	public void getParameterReturnsDoubleValueWhenSet() throws Exception
 	{

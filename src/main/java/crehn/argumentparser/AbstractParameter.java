@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public abstract class AbstractParameter<T> implements Argument<T>
+abstract class AbstractParameter<T> implements Argument<T>
 {
 	private final char name;
 	private T value;

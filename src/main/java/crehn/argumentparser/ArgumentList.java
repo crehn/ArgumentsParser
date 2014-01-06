@@ -3,7 +3,7 @@ package crehn.argumentparser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArgumentList<T> extends ArrayList<Argument<T>>
+class ArgumentList<T> extends ArrayList<Argument<T>>
 {
 	private static final long serialVersionUID = 1L;
 	

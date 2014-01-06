@@ -1,6 +1,6 @@
 package crehn.argumentparser;
 
-public class IntegerParameter extends AbstractParameter<Integer>
+class IntegerParameter extends AbstractParameter<Integer>
 {
 	public IntegerParameter(char name)
 	{

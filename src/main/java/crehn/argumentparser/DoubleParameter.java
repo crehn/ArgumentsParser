@@ -1,6 +1,6 @@
 package crehn.argumentparser;
 
-public class DoubleParameter extends AbstractParameter<Double>
+class DoubleParameter extends AbstractParameter<Double>
 {
 	public DoubleParameter(char name)
 	{
