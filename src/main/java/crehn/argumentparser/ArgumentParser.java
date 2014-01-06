@@ -91,4 +91,13 @@ public class ArgumentParser
 		catchAllArgAlreadySpecified = true;
 	}
 	
+	boolean isSpecified(char argumentName)
+	{
+		return arguments.isSpecified(argumentName);
+	}
+	
+	<T> Argument<T> getArgumentByName(char argumentName)
+	{
+		return arguments.getArgumentByName(argumentName);
+	}
 }

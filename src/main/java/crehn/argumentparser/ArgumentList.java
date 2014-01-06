@@ -12,7 +12,7 @@ class ArgumentList<T> extends ArrayList<Argument<T>>
 		return getArgumentByName(argumentName) != null;
 	}
 	
-	protected Argument<T> getArgumentByName(char argumentName)
+	Argument<T> getArgumentByName(char argumentName)
 	{
 		for (Argument<T> arg : this)
 		{
