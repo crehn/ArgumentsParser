@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -9,13 +9,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class IntegerParameterTest {
-	IntegerParameter parameter;
+import com.github.crehn.argumentparser.StringParameter;
+
+public class StringParameterTest {
+	StringParameter parameter;
 	private List<String> arguments;
 	
 	@Before
 	public void setup() {
-		parameter = new IntegerParameter('p');
+		parameter = new StringParameter('p');
 	}
 	
 	private void givenArguments(String... arguments) {
@@ -23,19 +25,12 @@ public class IntegerParameterTest {
 	}
 	
 	@Test
-	public void parseIntegerValue() throws Exception {
-		givenArguments("-p", "42");
+	public void parseStringValue() throws Exception {
+		givenArguments("-p", "value");
 		
 		List<String> yetToParse = parameter.parse(arguments);
 		
 		assertEquals(emptyList(), yetToParse);
-		assertEquals(Integer.valueOf(42), parameter.getValue());
-	}
-	
-	@Test(expected = NumberFormatException.class)
-	public void throwWhenStringValue() throws Exception {
-		givenArguments("-p", "not an int");
-		
-		parameter.parse(arguments);
+		assertEquals("value", parameter.getValue());
 	}
 }

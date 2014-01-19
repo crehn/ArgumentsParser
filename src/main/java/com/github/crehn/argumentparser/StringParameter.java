@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 class StringParameter extends AbstractParameter<String> {
 	public StringParameter(char name) {

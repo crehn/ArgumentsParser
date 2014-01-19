@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.crehn.argumentparser.ArgumentList;
+import com.github.crehn.argumentparser.Option;
 
 public class OptionListTest {
 	private ArgumentList<Boolean> optionList;

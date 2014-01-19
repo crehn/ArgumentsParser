@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 public class ParameterValueMissingException extends ArgumentParsingException {
 	private static final long serialVersionUID = 1L;

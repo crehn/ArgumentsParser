@@ -1,9 +1,11 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.crehn.argumentparser.*;
 
 public class ArgumentParserBuilderTest {
 	ArgumentParserBuilder buildParser;

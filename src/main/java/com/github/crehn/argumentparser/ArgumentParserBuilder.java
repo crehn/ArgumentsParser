@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 public class ArgumentParserBuilder {
 	ArgumentParser parser = new ArgumentParser();

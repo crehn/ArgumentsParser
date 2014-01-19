@@ -1,4 +1,4 @@
-package crehn.argumentparser;
+package com.github.crehn.argumentparser;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.crehn.argumentparser.ParameterValueMissingException;
+import com.github.crehn.argumentparser.StringParameter;
 
 public class ParameterTest {
 	StringParameter parameter;
