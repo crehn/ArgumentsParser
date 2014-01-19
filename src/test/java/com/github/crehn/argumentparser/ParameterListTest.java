@@ -11,8 +11,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.crehn.argumentparser.*;
-
 public class ParameterListTest {
 	ArgumentList<String> parameterList;
 	private List<String> arguments;
