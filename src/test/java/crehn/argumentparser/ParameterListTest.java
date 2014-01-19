@@ -11,45 +11,38 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ParameterListTest
-{
+public class ParameterListTest {
 	ArgumentList<String> parameterList;
 	private List<String> arguments;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		parameterList = new ArgumentList<>();
 	}
 	
-	private void givenArguments(String... arguments)
-	{
+	private void givenArguments(String... arguments) {
 		this.arguments = asList(arguments);
 	}
 	
-	private void givenParameters(char... parameters)
-	{
+	private void givenParameters(char... parameters) {
 		for (char p : parameters)
 			parameterList.add(new StringParameter(p));
 	}
 	
 	@Test
-	public void parseHandlesEmptyList() throws Exception
-	{
+	public void parseHandlesEmptyList() throws Exception {
 		List<String> yetToParse = parameterList.parse(Collections.<String> emptyList());
 		
 		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void parseHandlesNull() throws Exception
-	{
+	public void parseHandlesNull() throws Exception {
 		parameterList.parse(null);
 	}
 	
 	@Test
-	public void parseReturnsIdentityWhenNoParameterSpecified() throws Exception
-	{
+	public void parseReturnsIdentityWhenNoParameterSpecified() throws Exception {
 		givenArguments("-p");
 		List<String> yetToParse = parameterList.parse(arguments);
 		
@@ -57,8 +50,7 @@ public class ParameterListTest
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void getByNameThrowsWhenParameterNotSpecified() throws Exception
-	{
+	public void getByNameThrowsWhenParameterNotSpecified() throws Exception {
 		givenArguments("-p");
 		parameterList.parse(arguments);
 		
@@ -66,8 +58,7 @@ public class ParameterListTest
 	}
 	
 	@Test
-	public void parseReturnsIdentityWhenOtherParameterSpecified() throws Exception
-	{
+	public void parseReturnsIdentityWhenOtherParameterSpecified() throws Exception {
 		givenParameters('p');
 		givenArguments("-q");
 		List<String> yetToParse = parameterList.parse(arguments);
@@ -77,8 +68,7 @@ public class ParameterListTest
 	}
 	
 	@Test(expected = ParameterValueMissingException.class)
-	public void parseThrowsWhenParameterValueMissing() throws Exception
-	{
+	public void parseThrowsWhenParameterValueMissing() throws Exception {
 		givenParameters('p');
 		givenArguments("-p");
 		
@@ -86,8 +76,7 @@ public class ParameterListTest
 	}
 	
 	@Test
-	public void parseHandlesSingleSpecifiedParameter() throws Exception
-	{
+	public void parseHandlesSingleSpecifiedParameter() throws Exception {
 		givenParameters('p');
 		givenArguments("-p", "value");
 		List<String> yetToParse = parameterList.parse(arguments);
@@ -97,8 +86,7 @@ public class ParameterListTest
 	}
 	
 	@Test
-	public void parseHandles2Parameters() throws Exception
-	{
+	public void parseHandles2Parameters() throws Exception {
 		givenParameters('p', 'q');
 		givenArguments("-p", "pvalue", "-q", "qvalue");
 		List<String> yetToParse = parameterList.parse(arguments);
@@ -109,8 +97,7 @@ public class ParameterListTest
 	}
 	
 	@Test
-	public void parseHandles2Parameters2() throws Exception
-	{
+	public void parseHandles2Parameters2() throws Exception {
 		givenParameters('p', 'q');
 		givenArguments("-p", "pvalue", "-q", "qvalue", "additional value");
 		List<String> yetToParse = parameterList.parse(arguments);

@@ -5,27 +5,23 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ArgumentParserBuilderTest
-{
+public class ArgumentParserBuilderTest {
 	ArgumentParserBuilder buildParser;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		buildParser = new ArgumentParserBuilder();
 	}
 	
 	@Test
-	public void buildsEmptyParser() throws Exception
-	{
+	public void buildsEmptyParser() throws Exception {
 		ArgumentParser parser = buildParser.build();
 		
 		assertNotNull(parser);
 	}
 	
 	@Test
-	public void buildsParserWithOptions() throws Exception
-	{
+	public void buildsParserWithOptions() throws Exception {
 		ArgumentParser parser = buildParser.withOption('o').andOption('p').build();
 		
 		assertTrue(parser.isSpecified('o'));
@@ -35,8 +31,7 @@ public class ArgumentParserBuilderTest
 	}
 	
 	@Test
-	public void buildsParserWithStringParams() throws Exception
-	{
+	public void buildsParserWithStringParams() throws Exception {
 		ArgumentParser parser = buildParser.withStringParameter('p').andStringParameter('q').build();
 		
 		assertTrue(parser.isSpecified('p'));
@@ -46,8 +41,7 @@ public class ArgumentParserBuilderTest
 	}
 	
 	@Test
-	public void buildsParserWithIntegerParams() throws Exception
-	{
+	public void buildsParserWithIntegerParams() throws Exception {
 		ArgumentParser parser = buildParser.withIntegerParameter('p').andIntegerParameter('q').build();
 		
 		assertTrue(parser.isSpecified('p'));
@@ -57,8 +51,7 @@ public class ArgumentParserBuilderTest
 	}
 	
 	@Test
-	public void buildsParserWithDoubleParams() throws Exception
-	{
+	public void buildsParserWithDoubleParams() throws Exception {
 		ArgumentParser parser = buildParser.withDoubleParameter('p').andDoubleParameter('q').build();
 		
 		assertTrue(parser.isSpecified('p'));
@@ -68,8 +61,7 @@ public class ArgumentParserBuilderTest
 	}
 	
 	@Test
-	public void buildsParserWithStringListParams1() throws Exception
-	{
+	public void buildsParserWithStringListParams1() throws Exception {
 		ArgumentParser parser = buildParser.withStringListParameter('p').build();
 		
 		assertTrue(parser.isSpecified('p'));
@@ -77,8 +69,7 @@ public class ArgumentParserBuilderTest
 	}
 	
 	@Test
-	public void buildsParserWithStringListParams2() throws Exception
-	{
+	public void buildsParserWithStringListParams2() throws Exception {
 		ArgumentParser parser = buildParser.andStringListParameter('q').build();
 		
 		assertTrue(parser.isSpecified('q'));

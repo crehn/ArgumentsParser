@@ -9,25 +9,21 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StringListParameterTest
-{
+public class StringListParameterTest {
 	StringListParameter parameter;
 	private List<String> arguments;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		parameter = new StringListParameter('p');
 	}
 	
-	private void givenArguments(String... arguments)
-	{
+	private void givenArguments(String... arguments) {
 		this.arguments = asList(arguments);
 	}
 	
 	@Test
-	public void parseEmptyList() throws Exception
-	{
+	public void parseEmptyList() throws Exception {
 		givenArguments("-p");
 		
 		List<String> yetToParse = parameter.parse(arguments);
@@ -37,8 +33,7 @@ public class StringListParameterTest
 	}
 	
 	@Test
-	public void parseOneString() throws Exception
-	{
+	public void parseOneString() throws Exception {
 		givenArguments("-p", "one");
 		
 		List<String> yetToParse = parameter.parse(arguments);
@@ -48,8 +43,7 @@ public class StringListParameterTest
 	}
 	
 	@Test
-	public void parseTwoStrings() throws Exception
-	{
+	public void parseTwoStrings() throws Exception {
 		givenArguments("-p", "one", "two");
 		
 		List<String> yetToParse = parameter.parse(arguments);

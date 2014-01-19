@@ -6,26 +6,22 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-class Option implements Argument<Boolean>
-{
+class Option implements Argument<Boolean> {
 	private final char name;
 	private Boolean isSet = false;
 	
 	@Override
-	public List<String> parse(List<String> yetToParse)
-	{
+	public List<String> parse(List<String> yetToParse) {
 		String firstArgument = yetToParse.get(0);
 		isSet = optionPartOf(firstArgument).contains("" + this.name);
 		return removeOptionFrom(yetToParse);
 	}
 	
-	private String optionPartOf(String argument)
-	{
+	private String optionPartOf(String argument) {
 		return argument.length() == 0 ? "" : argument.substring(1);
 	}
 	
-	private List<String> removeOptionFrom(List<String> yetToParse)
-	{
+	private List<String> removeOptionFrom(List<String> yetToParse) {
 		List<String> result = new ArrayList<>(yetToParse);
 		String firstArgument = result.get(0);
 		firstArgument = removeOptionFrom(firstArgument);
@@ -36,8 +32,7 @@ class Option implements Argument<Boolean>
 			return result;
 	}
 	
-	private String removeOptionFrom(String argument)
-	{
+	private String removeOptionFrom(String argument) {
 		if (argument.length() == 2)
 			return argument.charAt(1) == name ? "" : argument;
 		
@@ -45,8 +40,7 @@ class Option implements Argument<Boolean>
 	}
 	
 	@Override
-	public boolean canHandle(List<String> yetToParse)
-	{
+	public boolean canHandle(List<String> yetToParse) {
 		String firstArgument = yetToParse.get(0);
 		if (!looksLikeOptions(firstArgument))
 			return false;
@@ -54,14 +48,12 @@ class Option implements Argument<Boolean>
 		return optionPartOf(firstArgument).contains("" + this.name);
 	}
 	
-	private boolean looksLikeOptions(String argument)
-	{
+	private boolean looksLikeOptions(String argument) {
 		return argument.startsWith("-");
 	}
 	
 	@Override
-	public Boolean getValue()
-	{
+	public Boolean getValue() {
 		return getIsSet();
 	}
 }

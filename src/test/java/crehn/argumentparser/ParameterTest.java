@@ -10,67 +10,56 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ParameterTest
-{
+public class ParameterTest {
 	StringParameter parameter;
 	private List<String> arguments;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		parameter = new StringParameter('p');
 	}
 	
-	private void givenArguments(String... arguments)
-	{
+	private void givenArguments(String... arguments) {
 		this.arguments = asList(arguments);
 	}
 	
 	@Test
-	public void initiallyValueIsUnknown() throws Exception
-	{
+	public void initiallyValueIsUnknown() throws Exception {
 		assertNull(parameter.getValue());
 	}
 	
 	@Test
-	public void canHandleReturnsFalseForEmptyList() throws Exception
-	{
+	public void canHandleReturnsFalseForEmptyList() throws Exception {
 		assertFalse(parameter.canHandle(Collections.<String> emptyList()));
 	}
 	
 	@Test
-	public void canHandleReturnsTrueForSpecifiedParameter() throws Exception
-	{
+	public void canHandleReturnsTrueForSpecifiedParameter() throws Exception {
 		assertTrue(parameter.canHandle(asList("-p")));
 	}
 	
 	@Test
-	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception
-	{
+	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception {
 		assertFalse(parameter.canHandle(asList("p")));
 	}
 	
 	@Test
-	public void canHandleReturnsFalseForOtherParameter() throws Exception
-	{
+	public void canHandleReturnsFalseForOtherParameter() throws Exception {
 		assertFalse(parameter.canHandle(asList("-q")));
 	}
 	
 	@Test
-	public void canHandleReturnsTrueForSpecifiedParameterDespiteFollowing() throws Exception
-	{
+	public void canHandleReturnsTrueForSpecifiedParameterDespiteFollowing() throws Exception {
 		assertTrue(parameter.canHandle(asList("-p", "-q")));
 	}
 	
 	@Test
-	public void canHandleReturnsFalseForOtherParameterDespiteFollowing() throws Exception
-	{
+	public void canHandleReturnsFalseForOtherParameterDespiteFollowing() throws Exception {
 		assertFalse(parameter.canHandle(asList("-q", "-p")));
 	}
 	
 	@Test
-	public void parseHandlesEmptyList() throws Exception
-	{
+	public void parseHandlesEmptyList() throws Exception {
 		givenArguments();
 		
 		List<String> yetToParse = parameter.parse(arguments);
@@ -80,8 +69,7 @@ public class ParameterTest
 	}
 	
 	@Test(expected = ParameterValueMissingException.class)
-	public void parseThrowsWhenValueMissing() throws Exception
-	{
+	public void parseThrowsWhenValueMissing() throws Exception {
 		givenArguments("-p");
 		
 		List<String> yetToParse = parameter.parse(arguments);
@@ -91,8 +79,7 @@ public class ParameterTest
 	}
 	
 	@Test
-	public void parseIgnoresWhenDashMissing() throws Exception
-	{
+	public void parseIgnoresWhenDashMissing() throws Exception {
 		givenArguments("p", "value");
 		
 		List<String> yetToParse = parameter.parse(arguments);

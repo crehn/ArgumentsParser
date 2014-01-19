@@ -9,60 +9,51 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class OptionListTest
-{
+public class OptionListTest {
 	private ArgumentList<Boolean> optionList;
 	private List<String> args;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		optionList = new ArgumentList<>();
 		args = emptyList();
 	}
 	
-	private void givenSpecifiedOptions(char... options)
-	{
+	private void givenSpecifiedOptions(char... options) {
 		for (char o : options)
 			optionList.add(new Option(o));
 	}
 	
-	private void givenArguments(String... arguments)
-	{
+	private void givenArguments(String... arguments) {
 		args = asList(arguments);
 	}
 	
 	@Test
-	public void parseHandlsEmptyList() throws Exception
-	{
+	public void parseHandlsEmptyList() throws Exception {
 		List<String> yetToParse = optionList.parse(args);
 		
 		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void parseHandlsNull() throws Exception
-	{
+	public void parseHandlsNull() throws Exception {
 		optionList.parse(null);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void isOptionSetThrowsWhenOptionNotSpecified() throws Exception
-	{
+	public void isOptionSetThrowsWhenOptionNotSpecified() throws Exception {
 		assertFalse(optionList.getValueByName('o'));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void isOptionSetThrowsWhenOptionNotSpecified2() throws Exception
-	{
+	public void isOptionSetThrowsWhenOptionNotSpecified2() throws Exception {
 		givenArguments("-o");
 		optionList.parse(args);
 		assertFalse(optionList.getValueByName('o'));
 	}
 	
 	@Test
-	public void parseReturnsIdentityWhenNoOptionSpecified() throws Exception
-	{
+	public void parseReturnsIdentityWhenNoOptionSpecified() throws Exception {
 		givenArguments("-o");
 		
 		List<String> yetToParse = optionList.parse(args);
@@ -71,8 +62,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseReturnsIdentityWhenOtherOptionSpecified() throws Exception
-	{
+	public void parseReturnsIdentityWhenOtherOptionSpecified() throws Exception {
 		givenSpecifiedOptions('o');
 		givenArguments("-u");
 		
@@ -83,8 +73,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseHandlesSingleSpecifiedOption() throws Exception
-	{
+	public void parseHandlesSingleSpecifiedOption() throws Exception {
 		givenSpecifiedOptions('o');
 		givenArguments("-o");
 		
@@ -95,8 +84,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseHandles2Options() throws Exception
-	{
+	public void parseHandles2Options() throws Exception {
 		givenSpecifiedOptions('o', 'u');
 		givenArguments("-o", "-u");
 		
@@ -108,8 +96,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseHandles2Options2() throws Exception
-	{
+	public void parseHandles2Options2() throws Exception {
 		givenSpecifiedOptions('o', 'u');
 		givenArguments("-o", "-u", "-v");
 		
@@ -121,8 +108,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseHandlesConcatenatedOptions() throws Exception
-	{
+	public void parseHandlesConcatenatedOptions() throws Exception {
 		givenSpecifiedOptions('o', 'u');
 		givenArguments("-ou");
 		
@@ -134,8 +120,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseHandlesConcatenatedOptions2() throws Exception
-	{
+	public void parseHandlesConcatenatedOptions2() throws Exception {
 		givenSpecifiedOptions('o', 'u');
 		givenArguments("-uo");
 		
@@ -147,8 +132,7 @@ public class OptionListTest
 	}
 	
 	@Test
-	public void parseHandlesConcatenatedOptions3() throws Exception
-	{
+	public void parseHandlesConcatenatedOptions3() throws Exception {
 		givenSpecifiedOptions('o', 'u');
 		givenArguments("-ouv");
 		

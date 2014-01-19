@@ -1,11 +1,9 @@
 package crehn.argumentparser;
 
-public class ArgumentParsingException extends Exception
-{
+public class ArgumentParsingException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
-	public ArgumentParsingException(String msg)
-	{
+	public ArgumentParsingException(String msg) {
 		super(msg);
 	}
 	

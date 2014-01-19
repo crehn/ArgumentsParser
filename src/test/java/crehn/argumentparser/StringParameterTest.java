@@ -9,25 +9,21 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StringParameterTest
-{
+public class StringParameterTest {
 	StringParameter parameter;
 	private List<String> arguments;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		parameter = new StringParameter('p');
 	}
 	
-	private void givenArguments(String... arguments)
-	{
+	private void givenArguments(String... arguments) {
 		this.arguments = asList(arguments);
 	}
 	
 	@Test
-	public void parseStringValue() throws Exception
-	{
+	public void parseStringValue() throws Exception {
 		givenArguments("-p", "value");
 		
 		List<String> yetToParse = parameter.parse(arguments);

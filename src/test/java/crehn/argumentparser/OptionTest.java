@@ -9,63 +9,53 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class OptionTest
-{
+public class OptionTest {
 	private Option option;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		option = new Option('o');
 	}
 	
 	@Test
-	public void initiallyValueIsUnknown() throws Exception
-	{
+	public void initiallyValueIsUnknown() throws Exception {
 		assertFalse(option.getIsSet());
 	}
 	
 	@Test
-	public void canHandleReturnsFalseForEmptyString() throws Exception
-	{
+	public void canHandleReturnsFalseForEmptyString() throws Exception {
 		assertFalse(option.canHandle(asList("")));
 	}
 	
 	@Test
-	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception
-	{
+	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception {
 		assertFalse(option.canHandle(asList("o")));
 	}
 	
 	@Test
-	public void canHandleReturnsFalseWhenOtherChar() throws Exception
-	{
+	public void canHandleReturnsFalseWhenOtherChar() throws Exception {
 		assertFalse(option.canHandle(asList("-u")));
 	}
 	
 	@Test
-	public void canHandleReturnsTrue() throws Exception
-	{
+	public void canHandleReturnsTrue() throws Exception {
 		assertTrue(option.canHandle(asList("-o")));
 	}
 	
 	@Test
-	public void canHandleReturnsTrueForConcatenatedOptions() throws Exception
-	{
+	public void canHandleReturnsTrueForConcatenatedOptions() throws Exception {
 		assertTrue(option.canHandle(asList("-ou")));
 	}
 	
 	@Test
-	public void parseSetsFalseWhenEmptyString() throws Exception
-	{
+	public void parseSetsFalseWhenEmptyString() throws Exception {
 		option.parse(asList(""));
 		
 		assertFalse(option.getIsSet());
 	}
 	
 	@Test
-	public void parseSetsTrueWhenExpectedOption() throws Exception
-	{
+	public void parseSetsTrueWhenExpectedOption() throws Exception {
 		List<String> yetToParse = option.parse(asList("-o"));
 		
 		assertTrue(option.getIsSet());
@@ -73,8 +63,7 @@ public class OptionTest
 	}
 	
 	@Test
-	public void parseSetsFalseWhenOtherOption() throws Exception
-	{
+	public void parseSetsFalseWhenOtherOption() throws Exception {
 		List<String> yetToParse = option.parse(asList("-u"));
 		
 		assertFalse(option.getIsSet());
@@ -82,8 +71,7 @@ public class OptionTest
 	}
 	
 	@Test
-	public void parseSetsFalseWhenMissingDash() throws Exception
-	{
+	public void parseSetsFalseWhenMissingDash() throws Exception {
 		List<String> yetToParse = option.parse(asList("o"));
 		
 		assertFalse(option.getIsSet());
@@ -91,8 +79,7 @@ public class OptionTest
 	}
 	
 	@Test
-	public void parseCanHandleConcatenatedOptions() throws Exception
-	{
+	public void parseCanHandleConcatenatedOptions() throws Exception {
 		List<String> yetToParse = option.parse(asList("-ou"));
 		
 		assertTrue(option.getIsSet());
@@ -100,8 +87,7 @@ public class OptionTest
 	}
 	
 	@Test
-	public void parseCanHandleConcatenatedOptions2() throws Exception
-	{
+	public void parseCanHandleConcatenatedOptions2() throws Exception {
 		List<String> yetToParse = option.parse(asList("-uo"));
 		
 		assertTrue(option.getIsSet());

@@ -2,8 +2,7 @@ package crehn.argumentparser;
 
 import java.util.List;
 
-interface Argument<T>
-{
+interface Argument<T> {
 	boolean canHandle(List<String> yetToParse);
 	
 	List<String> parse(List<String> yetToParse) throws ArgumentParsingException;

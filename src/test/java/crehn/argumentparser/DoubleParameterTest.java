@@ -9,25 +9,21 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DoubleParameterTest
-{
+public class DoubleParameterTest {
 	DoubleParameter parameter;
 	private List<String> arguments;
 	
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		parameter = new DoubleParameter('p');
 	}
 	
-	private void givenArguments(String... arguments)
-	{
+	private void givenArguments(String... arguments) {
 		this.arguments = asList(arguments);
 	}
 	
 	@Test
-	public void parseIntegerValue() throws Exception
-	{
+	public void parseIntegerValue() throws Exception {
 		givenArguments("-p", "42");
 		
 		List<String> yetToParse = parameter.parse(arguments);
@@ -37,8 +33,7 @@ public class DoubleParameterTest
 	}
 	
 	@Test
-	public void parseDoubleValue() throws Exception
-	{
+	public void parseDoubleValue() throws Exception {
 		givenArguments("-p", "12.34");
 		
 		List<String> yetToParse = parameter.parse(arguments);
@@ -48,8 +43,7 @@ public class DoubleParameterTest
 	}
 	
 	@Test(expected = NumberFormatException.class)
-	public void throwWhenStringValue() throws Exception
-	{
+	public void throwWhenStringValue() throws Exception {
 		givenArguments("-p", "not a double");
 		
 		parameter.parse(arguments);

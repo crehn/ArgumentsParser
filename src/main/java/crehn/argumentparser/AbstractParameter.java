@@ -5,14 +5,12 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-abstract class AbstractParameter<T> implements Argument<T>
-{
+abstract class AbstractParameter<T> implements Argument<T> {
 	private final char name;
 	private T value;
 	
 	@Override
-	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException
-	{
+	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException {
 		if (!canHandle(yetToParse))
 			return yetToParse;
 		if (yetToParse.size() == 1)
@@ -25,8 +23,7 @@ abstract class AbstractParameter<T> implements Argument<T>
 	protected abstract T convertType(String string);
 	
 	@Override
-	public boolean canHandle(List<String> yetToParse)
-	{
+	public boolean canHandle(List<String> yetToParse) {
 		if (yetToParse.isEmpty())
 			return false;
 		
@@ -34,8 +31,7 @@ abstract class AbstractParameter<T> implements Argument<T>
 		return canHandle(firstArgument);
 	}
 	
-	private boolean canHandle(String argument)
-	{
+	private boolean canHandle(String argument) {
 		return ("-" + name).equals(argument);
 	}
 }
