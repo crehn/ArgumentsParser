@@ -11,55 +11,55 @@ public class ParametersParsingTest {
 	ArgumentParser parser;
 	
 	@Before
-	public void setUp() {
+	public void setup() {
 		parser = new ArgumentParser();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void specifyingParameterTwiceThrows() throws Exception {
+	public void shouldThrowWhenSpecifyingParameterTwice() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.specifyStringParameter('p');
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
-	public void parseThrowsWhenUnexpectedArguments() throws Exception {
+	public void shouldThrowWhenUnexpectedArguments() throws Exception {
 		parser.parse("dummy text");
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
-	public void parseThrowsIfTwoParameterValues() throws Exception {
+	public void shouldThrowsWhenTwoParameterValues() throws Exception {
 		parser.specifyStringParameter('p');
 		
 		parser.parse("-p", "one", "two");
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenNotSpecified() throws Exception {
+	public void whouldThrowWhenNotSpecified() throws Exception {
 		parser.parse("-p", "value");
 	}
 	
 	@Test(expected = ParameterValueMissingException.class)
-	public void parseThrowsWhenArgumentMissing() throws Exception {
+	public void shouldThrowWhenArgumentMissing() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.parse("-p");
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
-	public void parseThrowsWhenArgumentMissing2() throws Exception {
+	public void shouldThrowsWhenArgumentMissing2() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.specifyOption('o');
 		parser.parse("-p", "-o", "value");
 	}
 	
 	@Test
-	public void getParameterReturnsNullWhenParseNotCalled() throws Exception {
+	public void shouldReturnNullWhenParseNotCalled() throws Exception {
 		parser.specifyStringParameter('p');
 		
 		assertNull(parser.getParameter('p'));
 	}
 	
 	@Test
-	public void getParameterReturnsNullWhenNotSet() throws Exception {
+	public void shouldReturnNullWhenNotSet() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.parse();
 		
@@ -67,7 +67,7 @@ public class ParametersParsingTest {
 	}
 	
 	@Test
-	public void getParameterReturnsStringValueWhenSet() throws Exception {
+	public void shouldReturnStringValueWhenSet() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.parse("-p", "value");
 		
@@ -75,7 +75,7 @@ public class ParametersParsingTest {
 	}
 	
 	@Test
-	public void getParameterReturnsEmptyStringValueWhenSet() throws Exception {
+	public void shouldReturnEmptyStringValueWhenSet() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.parse("-p", "");
 		
@@ -83,7 +83,7 @@ public class ParametersParsingTest {
 	}
 	
 	@Test(expected = ClassCastException.class)
-	public void isOptionSetThrowsWhenItsActuallyAParameter() throws Exception {
+	public void shouldThrowWhenCallingIsOptionSetOnAParameter() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.parse("-p", "value");
 		

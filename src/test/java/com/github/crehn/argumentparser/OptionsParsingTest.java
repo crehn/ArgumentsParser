@@ -11,57 +11,57 @@ public class OptionsParsingTest {
 	ArgumentParser parser;
 	
 	@Before
-	public void setUp() {
+	public void setup() {
 		parser = new ArgumentParser();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void specifyingOptionTwiceThrows() throws Exception {
+	public void shouldThrowWhenSpecifyingOptionTwice() throws Exception {
 		parser.specifyOption('o');
 		parser.specifyOption('o');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void conflictingOptionSpecificationThrows() throws Exception {
+	public void shouldThrowWhenAlreadyAParameter() throws Exception {
 		parser.specifyStringParameter('o');
 		parser.specifyOption('o');
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenUnspecifiedOption() throws Exception {
+	public void shouldThrowWhenUnspecifiedOption() throws Exception {
 		parser.parse("-o");
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenAFurtherUnspecifiedOption() throws Exception {
+	public void shouldThrowWhenAFurtherUnspecifiedOption() throws Exception {
 		parser.specifyOption('o');
 		
 		parser.parse("-o", "-u");
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
-	public void parseThrowsWhenAFurtherUnspecifiedConcatenatedOption() throws Exception {
+	public void shouldThrowWhenAFurtherUnspecifiedConcatenatedOption() throws Exception {
 		parser.specifyOption('o');
 		
 		parser.parse("-ou");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void isOptionSetThrowsWhenOptionNotSpecified() throws Exception {
+	public void shouldThrowWhenOptionNotSpecified() throws Exception {
 		parser.parse();
 		
 		assertFalse(parser.isOptionSet('o'));
 	}
 	
 	@Test
-	public void isOptionSetReturnsFalseWhenParseNotCalled() throws Exception {
+	public void shouldReturnFalseWhenParseNotCalled() throws Exception {
 		parser.specifyOption('o');
 		
 		assertFalse(parser.isOptionSet('o'));
 	}
 	
 	@Test
-	public void isOptionSetReturnsFalseForEmptyArgs() throws Exception {
+	public void shouldReturnFalseForEmptyArgs() throws Exception {
 		parser.specifyOption('o');
 		parser.parse();
 		
@@ -69,7 +69,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void isOptionSetReturnsTrueWhenOptionIsSet() throws Exception {
+	public void shouldReturnTrueWhenOptionIsSet() throws Exception {
 		parser.specifyOption('o');
 		parser.parse("-o");
 		
@@ -77,7 +77,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void isOptionSetReturnsFalseWhenOptionIsNotSet() throws Exception {
+	public void shouldReturnFalseWhenOptionIsNotSet() throws Exception {
 		parser.specifyOption('o');
 		parser.specifyOption('u');
 		parser.parse("-o");
@@ -86,7 +86,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void isOptionSetReturnsTrueWhenSecondOptionSet() throws Exception {
+	public void shouldSetReturnTrueWhenSecondOptionSet() throws Exception {
 		parser.specifyOption('o');
 		parser.specifyOption('u');
 		parser.parse("-o", "-u");
@@ -96,7 +96,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void isOptionSetReturnsTrueWhenConcatenatedOptionSet() throws Exception {
+	public void shouldReturnTrueWhenConcatenatedOptionSet() throws Exception {
 		parser.specifyOption('o');
 		parser.specifyOption('u');
 		parser.parse("-ou");

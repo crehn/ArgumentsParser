@@ -8,7 +8,7 @@ public class ArgumentParserTest {
 	ArgumentParser parser;
 	
 	@Before
-	public void setUp() {
+	public void setup() {
 		parser = new ArgumentParser();
 	}
 	

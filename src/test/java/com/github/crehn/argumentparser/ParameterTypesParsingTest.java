@@ -11,50 +11,50 @@ public class ParameterTypesParsingTest {
 	ArgumentParser parser;
 	
 	@Before
-	public void setUp() {
+	public void setup() {
 		parser = new ArgumentParser();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void specifyingParameterTwiceThrows() throws Exception {
+	public void shouldThrowWhenSpecifyingParameterTwice() throws Exception {
 		parser.specifyStringParameter('o');
 		parser.specifyIntegerParameter('o');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void specifyingParameterTwiceThrows2() throws Exception {
+	public void shouldThrowWhenSpecifyingParameterTwice2() throws Exception {
 		parser.specifyStringParameter('o');
 		parser.specifyDoubleParameter('o');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void specifyingParameterTwiceThrows3() throws Exception {
+	public void shouldThrowWhenSpecifyingParameterTwice3() throws Exception {
 		parser.specifyStringParameter('o');
 		parser.specifyStringListParameter('o');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void specifyingTwoListParametersThrows() throws Exception {
+	public void shouldThrowWhenSpecifyingTwoListParameter() throws Exception {
 		parser.specifyStringListParameter('o');
 		parser.specifyStringListParameter('p');
 	}
 	
 	@Test(expected = NumberFormatException.class)
-	public void parseThrowsWhenWrongParameterTypeInteger() throws Exception {
+	public void shouldThrowWhenWrongParameterTypeInteger() throws Exception {
 		parser.specifyIntegerParameter('p');
 		
 		parser.parse("-p", "not an int");
 	}
 	
 	@Test(expected = NumberFormatException.class)
-	public void parseThrowsWhenWrongParameterTypeDouble() throws Exception {
+	public void shouldThrowWhenWrongParameterTypeDouble() throws Exception {
 		parser.specifyDoubleParameter('p');
 		
 		parser.parse("-p", "not a double");
 	}
 	
 	@Test
-	public void getParameterReturnsIntegerValueWhenSet() throws Exception {
+	public void shouldReturnIntegerValueWhenSet() throws Exception {
 		parser.specifyIntegerParameter('p');
 		parser.parse("-p", "42");
 		
@@ -63,7 +63,7 @@ public class ParameterTypesParsingTest {
 	}
 	
 	@Test(expected = ClassCastException.class)
-	public void getParameterThrowsWhenWrongTypeRequested() throws Exception {
+	public void shouldThrowWhenWrongTypeRequested() throws Exception {
 		parser.specifyIntegerParameter('p');
 		parser.parse("-p", "42");
 		
@@ -72,7 +72,7 @@ public class ParameterTypesParsingTest {
 	}
 	
 	@Test
-	public void getParameterReturnsDoubleValueWhenSet() throws Exception {
+	public void shouldReturnDoubleValueWhenSet() throws Exception {
 		parser.specifyDoubleParameter('p');
 		parser.specifyDoubleParameter('q');
 		parser.parse("-p", "42", "-q", "12.34");
@@ -84,7 +84,7 @@ public class ParameterTypesParsingTest {
 	}
 	
 	@Test
-	public void getParameterReturnsStringListValueWhenSet() throws Exception {
+	public void shouldReturnStringListValueWhenSet() throws Exception {
 		parser.specifyStringListParameter('p');
 		parser.parse("-p", "42", "-q", "12.34");
 		
