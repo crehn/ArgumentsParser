@@ -5,11 +5,39 @@
 	<artifactId>argumentsparser</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<description>A simple parser for command-line arguments.</description>
+	<inceptionYear>2013</inceptionYear>
+	<url>https://github.com/crehn/ArgumentsParser/</url>
+	<licenses>
+		<license>
+			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>crehn</id>
+			<name>Christian Rehn</name>
+			<email>mail@christian-rehn.de</email>
+			<url>https://github.com/crehn</url>
+		</developer>
+	</developers>
 	
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
+	
+	<scm>
+		<connection>scm:git:https://github.com/crehn/ArgumentsParser.git</connection>
+		<developerConnection>scm:git:git@github.com:crehn/ArgumentsParser.git</developerConnection>
+		<url>https://github.com/crehn/ArgumentsParser/</url>
+	</scm>
+	
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/crehn/ArgumentsParser/issues</url>
+	</issueManagement>
 	
 	<dependencies>
 		<!-- compile-time -->
