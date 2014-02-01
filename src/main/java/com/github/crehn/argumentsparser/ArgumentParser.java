@@ -54,19 +54,19 @@ public class ArgumentParser {
 		return arg.startsWith("-") && arg.length() > 1;
 	}
 	
-	public boolean isOptionSet(char option) {
-		return (Boolean) arguments.getValueByName(option);
+	public void specifyOption(char shortOptionName) {
+		specifyOption(null, shortOptionName);
 	}
 	
-	public <T> T getParameter(char paramName) {
-		return (T) arguments.getValueByName(paramName);
+	public void specifyOption(String longOptionName) {
+		specifyOption(longOptionName, null);
 	}
 	
-	public void specifyOption(char optionName) {
-		if (arguments.isSpecified(optionName))
-			throw new IllegalArgumentException("Argument already specified: " + optionName);
+	public void specifyOption(String longOptionName, Character shortOptionName) {
+		if (arguments.isSpecified(shortOptionName))
+			throw new IllegalArgumentException("Argument already specified: " + shortOptionName);
 		
-		arguments.add(new Option(optionName));
+		arguments.add(new Option(longOptionName, shortOptionName));
 	}
 	
 	public void specifyStringParameter(char parameterName) {
@@ -94,8 +94,20 @@ public class ArgumentParser {
 		if (arguments.isSpecified(parameterName) || catchAllArgAlreadySpecified)
 			throw new IllegalArgumentException("Argument already specified: " + parameterName);
 		
-		arguments.add(new StringListParameter(parameterName));
+		arguments.add(new StringListParameter(null, parameterName));
 		catchAllArgAlreadySpecified = true;
+	}
+	
+	public boolean isOptionSet(char shortOptionName) {
+		return (Boolean) arguments.getValueByName(shortOptionName);
+	}
+	
+	public boolean isOptionSet(String longOptionName) {
+		return (Boolean) arguments.getValueByName(longOptionName);
+	}
+	
+	public <T> T getParameter(char paramName) {
+		return (T) arguments.getValueByName(paramName);
 	}
 	
 	boolean isSpecified(char argumentName) {

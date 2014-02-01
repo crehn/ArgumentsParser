@@ -26,7 +26,8 @@ import lombok.Data;
 
 @Data
 class StringListParameter implements Argument<List<String>> {
-	private final char name;
+	private final String longName;
+	private final Character shortName;
 	private List<String> value;
 	
 	@Override
@@ -48,6 +49,6 @@ class StringListParameter implements Argument<List<String>> {
 	}
 	
 	private boolean canHandle(String argument) {
-		return ("-" + name).equals(argument);
+		return ("-" + shortName).equals(argument);
 	}
 }

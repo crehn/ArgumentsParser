@@ -34,7 +34,7 @@ public class StringListParameterTest {
 	
 	@Before
 	public void setup() {
-		param = new StringListParameter('p');
+		param = new StringListParameter(null, 'p');
 	}
 	
 	@Test

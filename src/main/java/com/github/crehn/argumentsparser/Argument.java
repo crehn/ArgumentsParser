@@ -25,7 +25,9 @@ interface Argument<T> {
 	
 	List<String> parse(List<String> yetToParse) throws ArgumentParsingException;
 	
-	char getName();
+	String getLongName();
+	
+	Character getShortName();
 	
 	T getValue();
 }

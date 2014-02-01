@@ -20,7 +20,7 @@ package com.github.crehn.argumentsparser;
 
 class IntegerParameter extends AbstractParameter<Integer> {
 	public IntegerParameter(char name) {
-		super(name);
+		super(null, name);
 	}
 	
 	@Override

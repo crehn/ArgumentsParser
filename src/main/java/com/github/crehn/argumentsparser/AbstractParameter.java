@@ -24,7 +24,8 @@ import lombok.Data;
 
 @Data
 abstract class AbstractParameter<T> implements Argument<T> {
-	private final char name;
+	private final String longName;
+	private final Character shortName;
 	private T value;
 	
 	@Override
@@ -34,7 +35,7 @@ abstract class AbstractParameter<T> implements Argument<T> {
 		if (yetToParse.size() == 1)
 			throw new ParameterValueMissingException(yetToParse.get(0));
 		if (value != null)
-			throw new ParameterAlreadyOccuredException(name);
+			throw new ParameterAlreadyOccuredException(shortName);
 		
 		value = convertType(yetToParse.get(1));
 		return yetToParse.subList(2, yetToParse.size());
@@ -52,6 +53,6 @@ abstract class AbstractParameter<T> implements Argument<T> {
 	}
 	
 	private boolean canHandle(String argument) {
-		return ("-" + name).equals(argument);
+		return ("-" + shortName).equals(argument);
 	}
 }

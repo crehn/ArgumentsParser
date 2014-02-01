@@ -24,24 +24,24 @@ import java.util.List;
 class ArgumentList<T> extends ArrayList<Argument<T>> {
 	private static final long serialVersionUID = 1L;
 	
-	public boolean isSpecified(char argumentName) {
+	public boolean isSpecified(Character argumentName) {
 		return getArgumentByName(argumentName) != null;
 	}
 	
-	Argument<T> getArgumentByName(char argumentName) {
+	Argument<T> getArgumentByName(Character argumentName) {
 		for (Argument<T> arg : this) {
-			if (arg.getName() == argumentName)
+			if (arg.getShortName() == argumentName)
 				return arg;
 		}
 		return null;
 	}
 	
 	public List<String> parse(List<String> yetToParse) throws ArgumentParsingException {
-		Argument<T> parameter = getArgumentByListToParse(yetToParse);
-		if (parameter == null)
+		Argument<T> argument = getArgumentByListToParse(yetToParse);
+		if (argument == null)
 			return yetToParse;
 		
-		yetToParse = parameter.parse(yetToParse);
+		yetToParse = argument.parse(yetToParse);
 		return parse(yetToParse);
 	}
 	
@@ -56,12 +56,28 @@ class ArgumentList<T> extends ArrayList<Argument<T>> {
 		return null;
 	}
 	
-	public T getValueByName(char argumentName) {
-		Argument<T> arg = getArgumentByName(argumentName);
+	public T getValueByName(Character shortArgumentName) {
+		Argument<T> arg = getArgumentByName(shortArgumentName);
 		if (arg == null)
-			throw new IllegalArgumentException("Argument is not specified: " + argumentName);
+			throw new IllegalArgumentException("Argument is not specified: " + shortArgumentName);
 		
 		return arg.getValue();
+	}
+	
+	public T getValueByName(String longArgumentName) {
+		Argument<T> arg = getArgumentByName(longArgumentName);
+		if (arg == null)
+			throw new IllegalArgumentException("Argument is not specified: " + longArgumentName);
+		
+		return arg.getValue();
+	}
+	
+	private Argument<T> getArgumentByName(String longArgumentName) {
+		for (Argument<T> arg : this) {
+			if (arg.getLongName() == longArgumentName)
+				return arg;
+		}
+		return null;
 	}
 	
 }

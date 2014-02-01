@@ -20,7 +20,7 @@ package com.github.crehn.argumentsparser;
 
 class StringParameter extends AbstractParameter<String> {
 	public StringParameter(char name) {
-		super(name);
+		super(null, name);
 	}
 	
 	@Override

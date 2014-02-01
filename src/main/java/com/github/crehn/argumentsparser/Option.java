@@ -25,18 +25,27 @@ import lombok.Data;
 
 @Data
 class Option implements Argument<Boolean> {
-	private final char name;
+	private final String longName;
+	private final Character shortName;
 	private Boolean isSet = false;
 	
 	@Override
 	public List<String> parse(List<String> yetToParse) {
 		String firstArgument = yetToParse.get(0);
-		isSet = optionPartOf(firstArgument).contains("" + this.name);
+		isSet = parseArgument(firstArgument);
 		return removeOptionFrom(yetToParse);
 	}
 	
-	private String optionPartOf(String argument) {
-		return argument.length() == 0 ? "" : argument.substring(1);
+	private boolean parseArgument(String argument) {
+		return argument != null && (isShortForm(argument) || isLongForm(argument));
+	}
+	
+	private boolean isShortForm(String argument) {
+		return argument.startsWith("-") && argument.contains("" + shortName);
+	}
+	
+	private boolean isLongForm(String argument) {
+		return ("--" + longName).equals(argument);
 	}
 	
 	private List<String> removeOptionFrom(List<String> yetToParse) {
@@ -51,23 +60,36 @@ class Option implements Argument<Boolean> {
 	}
 	
 	private String removeOptionFrom(String argument) {
+		if (isLongForm(argument))
+			return "";
+		else
+			return removeShortFormOfOption(argument);
+	}
+	
+	private String removeShortFormOfOption(String argument) {
 		if (argument.length() == 2)
-			return argument.charAt(1) == name ? "" : argument;
+			return argument.charAt(1) == shortName ? "" : argument;
 		
-		return argument.replaceFirst("" + this.name, "");
+		return argument.replaceFirst("" + this.shortName, "");
 	}
 	
 	@Override
 	public boolean canHandle(List<String> yetToParse) {
 		String firstArgument = yetToParse.get(0);
-		if (!looksLikeOptions(firstArgument))
+		if (looksLikeShortOptions(firstArgument))
+			return firstArgument.contains("" + shortName);
+		else if (looksLikeLongOption(firstArgument))
+			return firstArgument.equals("--" + longName);
+		else
 			return false;
-		
-		return optionPartOf(firstArgument).contains("" + this.name);
 	}
 	
-	private boolean looksLikeOptions(String argument) {
-		return argument.startsWith("-") && argument.length() > 1;
+	private boolean looksLikeLongOption(String argument) {
+		return argument.startsWith("--") && argument.length() > 2;
+	}
+	
+	private boolean looksLikeShortOptions(String argument) {
+		return argument.startsWith("-") && argument.length() > 1 && !argument.substring(1).contains("-");
 	}
 	
 	@Override

@@ -34,7 +34,7 @@ public class OptionTest {
 	
 	@Before
 	public void setup() {
-		option = new Option('o');
+		option = new Option(null, 'o');
 	}
 	
 	@Test
