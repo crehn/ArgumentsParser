@@ -81,4 +81,13 @@ public class ParametersParsingTest {
 		
 		assertEquals("", parser.getParameter('p'));
 	}
+	
+	@Test(expected = ClassCastException.class)
+	public void isOptionSetThrowsWhenItsActuallyAParameter() throws Exception {
+		parser.specifyStringParameter('p');
+		parser.parse("-p", "value");
+		
+		parser.isOptionSet('p');
+	}
+	
 }

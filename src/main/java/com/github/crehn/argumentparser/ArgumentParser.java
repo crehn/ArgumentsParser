@@ -34,8 +34,7 @@ public class ArgumentParser {
 	}
 	
 	public boolean isOptionSet(char option) {
-		Object value = arguments.getValueByName(option);
-		return value instanceof Boolean && (Boolean) value;
+		return (Boolean) arguments.getValueByName(option);
 	}
 	
 	public <T> T getParameter(char paramName) {

@@ -104,5 +104,4 @@ public class OptionsParsingTest {
 		assertTrue(parser.isOptionSet('o'));
 		assertTrue(parser.isOptionSet('u'));
 	}
-	
 }
