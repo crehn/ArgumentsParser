@@ -11,7 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class OptionTest {
-	private Option option;
+	
+	Option option;
 	
 	@Before
 	public void setup() {

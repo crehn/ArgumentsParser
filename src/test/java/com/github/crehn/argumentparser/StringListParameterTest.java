@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class StringListParameterTest {
 	
-	private StringListParameter param;
+	StringListParameter param;
 	
 	@Before
 	public void setup() {

@@ -11,7 +11,7 @@ public class ArgumentParser {
 	private final ArgumentList arguments = new ArgumentList();
 	private boolean catchAllArgAlreadySpecified = false;
 	
-	public void parse(String[] args) throws ArgumentParsingException {
+	public void parse(String... args) throws ArgumentParsingException {
 		List<String> yetToParse = asList(args);
 		while (!yetToParse.isEmpty()) {
 			int sizeBefore = yetToParse.size();

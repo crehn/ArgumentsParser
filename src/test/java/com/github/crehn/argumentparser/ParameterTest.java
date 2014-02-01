@@ -10,8 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ParameterTest {
+	
 	StringParameter parameter;
-	private List<String> arguments;
+	List<String> arguments;
 	
 	@Before
 	public void setup() {
