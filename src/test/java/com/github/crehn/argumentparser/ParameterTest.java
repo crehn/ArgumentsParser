@@ -1,7 +1,6 @@
 package com.github.crehn.argumentparser;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static org.junit.Assert.*;
 
 import java.util.Collections;
@@ -29,32 +28,12 @@ public class ParameterTest {
 	}
 	
 	@Test
-	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception {
-		assertFalse(parameter.canHandle(asList("p")));
-	}
-	
-	@Test
-	public void canHandleReturnsFalseForOtherParameter() throws Exception {
-		assertFalse(parameter.canHandle(asList("-q")));
-	}
-	
-	@Test
-	public void parseHandlesEmptyList() throws Exception {
-		givenArguments();
+	public void parseReturnsIdentityWhenCannotHanlde() throws Exception {
+		givenArguments("-q", "value");
 		
 		List<String> yetToParse = parameter.parse(arguments);
 		
-		assertEquals(emptyList(), yetToParse);
-		assertNull(parameter.getValue());
-	}
-	
-	@Test
-	public void parseIgnoresWhenDashMissing() throws Exception {
-		givenArguments("p", "value");
-		
-		List<String> yetToParse = parameter.parse(arguments);
-		
-		assertEquals(arguments, yetToParse);
+		assertEquals(asList("-q", "value"), yetToParse);
 		assertNull(parameter.getValue());
 	}
 }
