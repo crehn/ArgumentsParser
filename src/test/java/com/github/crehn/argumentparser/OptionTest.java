@@ -2,7 +2,8 @@ package com.github.crehn.argumentparser;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
@@ -18,48 +19,10 @@ public class OptionTest {
 	}
 	
 	@Test
-	public void initiallyValueIsUnknown() throws Exception {
-		assertFalse(option.getIsSet());
-	}
-	
-	@Test
-	public void canHandleReturnsFalseForEmptyString() throws Exception {
-		assertFalse(option.canHandle(asList("")));
-	}
-	
-	@Test
-	public void canHandleReturnsFalseWhenDashIsMissing() throws Exception {
-		assertFalse(option.canHandle(asList("o")));
-	}
-	
-	@Test
-	public void canHandleReturnsFalseWhenOtherChar() throws Exception {
-		assertFalse(option.canHandle(asList("-u")));
-	}
-	
-	@Test
-	public void canHandleReturnsTrue() throws Exception {
-		assertTrue(option.canHandle(asList("-o")));
-	}
-	
-	@Test
-	public void canHandleReturnsTrueForConcatenatedOptions() throws Exception {
-		assertTrue(option.canHandle(asList("-ou")));
-	}
-	
-	@Test
 	public void parseSetsFalseWhenEmptyString() throws Exception {
 		option.parse(asList(""));
 		
 		assertFalse(option.getIsSet());
-	}
-	
-	@Test
-	public void parseSetsTrueWhenExpectedOption() throws Exception {
-		List<String> yetToParse = option.parse(asList("-o"));
-		
-		assertTrue(option.getIsSet());
-		assertEquals(emptyList(), yetToParse);
 	}
 	
 	@Test
@@ -76,21 +39,5 @@ public class OptionTest {
 		
 		assertFalse(option.getIsSet());
 		assertEquals(emptyList(), yetToParse);
-	}
-	
-	@Test
-	public void parseCanHandleConcatenatedOptions() throws Exception {
-		List<String> yetToParse = option.parse(asList("-ou"));
-		
-		assertTrue(option.getIsSet());
-		assertEquals(asList("-u"), yetToParse);
-	}
-	
-	@Test
-	public void parseCanHandleConcatenatedOptions2() throws Exception {
-		List<String> yetToParse = option.parse(asList("-uo"));
-		
-		assertTrue(option.getIsSet());
-		assertEquals(asList("-u"), yetToParse);
 	}
 }

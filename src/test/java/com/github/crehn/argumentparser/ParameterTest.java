@@ -24,18 +24,8 @@ public class ParameterTest {
 	}
 	
 	@Test
-	public void initiallyValueIsUnknown() throws Exception {
-		assertNull(parameter.getValue());
-	}
-	
-	@Test
 	public void canHandleReturnsFalseForEmptyList() throws Exception {
 		assertFalse(parameter.canHandle(Collections.<String> emptyList()));
-	}
-	
-	@Test
-	public void canHandleReturnsTrueForSpecifiedParameter() throws Exception {
-		assertTrue(parameter.canHandle(asList("-p")));
 	}
 	
 	@Test
@@ -49,16 +39,6 @@ public class ParameterTest {
 	}
 	
 	@Test
-	public void canHandleReturnsTrueForSpecifiedParameterDespiteFollowing() throws Exception {
-		assertTrue(parameter.canHandle(asList("-p", "-q")));
-	}
-	
-	@Test
-	public void canHandleReturnsFalseForOtherParameterDespiteFollowing() throws Exception {
-		assertFalse(parameter.canHandle(asList("-q", "-p")));
-	}
-	
-	@Test
 	public void parseHandlesEmptyList() throws Exception {
 		givenArguments();
 		
@@ -66,16 +46,6 @@ public class ParameterTest {
 		
 		assertEquals(emptyList(), yetToParse);
 		assertNull(parameter.getValue());
-	}
-	
-	@Test(expected = ParameterValueMissingException.class)
-	public void parseThrowsWhenValueMissing() throws Exception {
-		givenArguments("-p");
-		
-		List<String> yetToParse = parameter.parse(arguments);
-		
-		assertEquals(emptyList(), yetToParse);
-		assertEquals("value", parameter.getValue());
 	}
 	
 	@Test
