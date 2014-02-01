@@ -1,4 +1,4 @@
-package com.github.crehn.argumentparser;
+package com.github.crehn.argumentsparser;
 
 import static java.util.Collections.emptyList;
 

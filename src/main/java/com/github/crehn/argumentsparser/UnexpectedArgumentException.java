@@ -1,4 +1,4 @@
-package com.github.crehn.argumentparser;
+package com.github.crehn.argumentsparser;
 
 public class UnexpectedArgumentException extends ArgumentParsingException {
 	private static final long serialVersionUID = 1L;

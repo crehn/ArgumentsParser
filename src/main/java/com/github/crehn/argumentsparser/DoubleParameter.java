@@ -1,4 +1,4 @@
-package com.github.crehn.argumentparser;
+package com.github.crehn.argumentsparser;
 
 class DoubleParameter extends AbstractParameter<Double> {
 	public DoubleParameter(char name) {

@@ -1,4 +1,4 @@
-package com.github.crehn.argumentparser;
+package com.github.crehn.argumentsparser;
 
 class IntegerParameter extends AbstractParameter<Integer> {
 	public IntegerParameter(char name) {
