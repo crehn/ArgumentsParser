@@ -4,11 +4,14 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
-// due to type erasure it's impossible to use type arguments for the arguments
-// list, so raw types are used and the warnings are ignored
-@SuppressWarnings({ "rawtypes", "unchecked" })
+// due to type erasure it's impossible to use type arguments for the
+// arguments list, so raw types are used and the warnings are ignored
+@SuppressWarnings({ "unchecked" })
 public class ArgumentParser {
+	
+	@SuppressWarnings({ "rawtypes" })
 	private final ArgumentList arguments = new ArgumentList();
+	
 	private boolean catchAllArgAlreadySpecified = false;
 	
 	public void parse(String... args) throws ArgumentParsingException {
