@@ -54,7 +54,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void isOptionSetRetrurnsFalseWhenParseNotCalled() throws Exception {
+	public void isOptionSetReturnsFalseWhenParseNotCalled() throws Exception {
 		parser.specifyOption('o');
 		
 		assertFalse(parser.isOptionSet('o'));
