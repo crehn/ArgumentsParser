@@ -10,9 +10,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.crehn.argumentparser.ParameterValueMissingException;
-import com.github.crehn.argumentparser.StringParameter;
-
 public class ParameterTest {
 	StringParameter parameter;
 	private List<String> arguments;
