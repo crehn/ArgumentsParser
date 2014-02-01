@@ -27,7 +27,7 @@ public class ParametersParsingTest {
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
-	public void shouldThrowsWhenTwoParameterValues() throws Exception {
+	public void shouldThrowWhenTwoParameterValues() throws Exception {
 		parser.specifyStringParameter('p');
 		
 		parser.parse("-p", "one", "two");
@@ -45,10 +45,24 @@ public class ParametersParsingTest {
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
-	public void shouldThrowsWhenArgumentMissing2() throws Exception {
+	public void shouldThrowWhenArgumentMissing2() throws Exception {
 		parser.specifyStringParameter('p');
 		parser.specifyOption('o');
 		parser.parse("-p", "-o", "value");
+	}
+	
+	@Test(expected = ClassCastException.class)
+	public void shouldThrowWhenCallingIsOptionSetOnAParameter() throws Exception {
+		parser.specifyStringParameter('p');
+		parser.parse("-p", "value");
+		
+		parser.isOptionSet('p');
+	}
+	
+	@Test(expected = ParameterAlreadyOccuredException.class)
+	public void shouldThrowWhenParameterGivenTwice() throws Exception {
+		parser.specifyStringParameter('p');
+		parser.parse("-p", "value", "-p", "value2");
 	}
 	
 	@Test
@@ -80,14 +94,6 @@ public class ParametersParsingTest {
 		parser.parse("-p", "");
 		
 		assertEquals("", parser.getParameter('p'));
-	}
-	
-	@Test(expected = ClassCastException.class)
-	public void shouldThrowWhenCallingIsOptionSetOnAParameter() throws Exception {
-		parser.specifyStringParameter('p');
-		parser.parse("-p", "value");
-		
-		parser.isOptionSet('p');
 	}
 	
 }

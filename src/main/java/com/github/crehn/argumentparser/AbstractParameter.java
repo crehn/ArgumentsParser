@@ -15,6 +15,8 @@ abstract class AbstractParameter<T> implements Argument<T> {
 			return yetToParse;
 		if (yetToParse.size() == 1)
 			throw new ParameterValueMissingException(yetToParse.get(0));
+		if (value != null)
+			throw new ParameterAlreadyOccuredException(name);
 		
 		value = convertType(yetToParse.get(1));
 		return yetToParse.subList(2, yetToParse.size());
