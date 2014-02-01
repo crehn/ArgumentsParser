@@ -135,6 +135,18 @@ public class ArgumentParserTest {
 	}
 	
 	@Test(expected = UnexpectedArgumentException.class)
+	public void parseThrowsWhenOnlyEmptyString() throws Exception {
+		parser.parse(new String[] { "" });
+	}
+	
+	@Test(expected = UnexpectedArgumentException.class)
+	public void parseThrowsWhenOnlyDash() throws Exception {
+		parser.specifyOption('o');
+		
+		parser.parse(new String[] { "-" });
+	}
+	
+	@Test(expected = UnexpectedArgumentException.class)
 	public void parseThrowsWhenUnexpectedArguments() throws Exception {
 		parser.parse(new String[] { "dummy text" });
 	}
@@ -156,6 +168,7 @@ public class ArgumentParserTest {
 	@Test(expected = UnexpectedArgumentException.class)
 	public void parseThrowsIfTwoParameterValues() throws Exception {
 		parser.specifyStringParameter('p');
+		
 		parser.parse(new String[] { "-p", "one", "two" });
 	}
 	
@@ -198,6 +211,14 @@ public class ArgumentParserTest {
 		parser.parse(new String[] { "-p", "value" });
 		
 		assertEquals("value", parser.getParameter('p'));
+	}
+	
+	@Test
+	public void getParameterReturnsEmptyStringValueWhenSet() throws Exception {
+		parser.specifyStringParameter('p');
+		parser.parse(new String[] { "-p", "" });
+		
+		assertEquals("", parser.getParameter('p'));
 	}
 	
 	@Test

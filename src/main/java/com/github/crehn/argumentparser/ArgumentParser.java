@@ -30,7 +30,7 @@ public class ArgumentParser {
 	}
 	
 	private boolean looksLikeOptions(String arg) {
-		return arg.startsWith("-");
+		return arg.startsWith("-") && arg.length() > 1;
 	}
 	
 	public boolean isOptionSet(char option) {

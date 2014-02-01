@@ -49,7 +49,7 @@ class Option implements Argument<Boolean> {
 	}
 	
 	private boolean looksLikeOptions(String argument) {
-		return argument.startsWith("-");
+		return argument.startsWith("-") && argument.length() > 1;
 	}
 	
 	@Override
