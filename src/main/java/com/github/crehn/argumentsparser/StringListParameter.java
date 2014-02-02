@@ -49,6 +49,6 @@ class StringListParameter implements Argument<List<String>> {
 	}
 	
 	private boolean canHandle(String argument) {
-		return ("-" + shortName).equals(argument);
+		return ("-" + shortName).equals(argument) || ("--" + longName).equals(argument);
 	}
 }

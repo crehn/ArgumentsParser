@@ -129,4 +129,12 @@ public class ParameterTypesParsingTest {
 		
 		assertEquals(asList("42", "-q", "12.34"), parser.getParameter('p'));
 	}
+	
+	@Test
+	public void shouldReturnStringListValueWhenSetWithLongName() throws Exception {
+		parser.specifyStringListParameter("long-parameter");
+		parser.parse("--long-parameter", "42", "-q", "12.34");
+		
+		assertEquals(asList("42", "-q", "12.34"), parser.getParameter("long-parameter"));
+	}
 }

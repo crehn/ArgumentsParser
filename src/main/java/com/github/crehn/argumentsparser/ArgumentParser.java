@@ -126,10 +126,19 @@ public class ArgumentParser {
 	}
 	
 	public void specifyStringListParameter(char paramName) {
-		if (arguments.isSpecified(paramName) || catchAllArgAlreadySpecified)
-			throw new IllegalArgumentException("Argument already specified: " + paramName);
+		specifyStringListParameter(null, paramName);
+	}
+	
+	public void specifyStringListParameter(String longParamName) {
+		specifyStringListParameter(longParamName, null);
+	}
+	
+	public void specifyStringListParameter(String longParamName, Character shortParamName) {
+		throwWhenAlreadySpecified(longParamName, shortParamName);
+		if (catchAllArgAlreadySpecified)
+			throw new IllegalArgumentException("Only one string list argument is allowed.");
 		
-		arguments.add(new StringListParameter(null, paramName));
+		arguments.add(new StringListParameter(longParamName, shortParamName));
 		catchAllArgAlreadySpecified = true;
 	}
 	
