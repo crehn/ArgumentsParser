@@ -19,8 +19,8 @@
 package com.github.crehn.argumentsparser;
 
 class IntegerParameter extends AbstractParameter<Integer> {
-	public IntegerParameter(char name) {
-		super(null, name);
+	public IntegerParameter(String longParamName, Character shortParamName) {
+		super(longParamName, shortParamName);
 	}
 	
 	@Override

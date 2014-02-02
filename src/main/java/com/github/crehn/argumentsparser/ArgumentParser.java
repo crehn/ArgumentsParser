@@ -63,10 +63,7 @@ public class ArgumentParser {
 	}
 	
 	public void specifyOption(String longOptionName, Character shortOptionName) {
-		if (arguments.isSpecified(longOptionName))
-			throw new IllegalArgumentException("Argument already specified: " + longOptionName);
-		if (arguments.isSpecified(shortOptionName))
-			throw new IllegalArgumentException("Argument already specified: " + shortOptionName);
+		throwWhenAlreadySpecified(longOptionName, shortOptionName);
 		
 		arguments.add(new Option(longOptionName, shortOptionName));
 	}
@@ -88,19 +85,30 @@ public class ArgumentParser {
 	}
 	
 	public void specifyStringParameter(String longParamName, Character shortParamName) {
-		if (arguments.isSpecified(longParamName))
-			throw new IllegalArgumentException("Argument already specified: " + longParamName);
-		if (arguments.isSpecified(shortParamName))
-			throw new IllegalArgumentException("Argument already specified: " + shortParamName);
+		throwWhenAlreadySpecified(longParamName, shortParamName);
 		
 		arguments.add(new StringParameter(longParamName, shortParamName));
 	}
 	
-	public void specifyIntegerParameter(char paramName) {
-		if (arguments.isSpecified(paramName))
-			throw new IllegalArgumentException("Argument already specified: " + paramName);
+	private void throwWhenAlreadySpecified(String longParamName, Character shortParamName) {
+		if (arguments.isSpecified(longParamName))
+			throw new IllegalArgumentException("Argument already specified: " + longParamName);
+		if (arguments.isSpecified(shortParamName))
+			throw new IllegalArgumentException("Argument already specified: " + shortParamName);
+	}
+	
+	public void specifyIntegerParameter(char shortParamName) {
+		specifyIntegerParameter(null, shortParamName);
+	}
+	
+	public void specifyIntegerParameter(String longParamName) {
+		specifyIntegerParameter(longParamName, null);
+	}
+	
+	public void specifyIntegerParameter(String longParamName, Character shortParamName) {
+		throwWhenAlreadySpecified(longParamName, shortParamName);
 		
-		arguments.add(new IntegerParameter(paramName));
+		arguments.add(new IntegerParameter(longParamName, shortParamName));
 	}
 	
 	public void specifyDoubleParameter(char paramName) {

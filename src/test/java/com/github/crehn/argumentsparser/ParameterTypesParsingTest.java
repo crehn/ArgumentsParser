@@ -71,6 +71,15 @@ public class ParameterTypesParsingTest {
 		parser.parse("-p", "not a double");
 	}
 	
+	@Test(expected = ClassCastException.class)
+	public void shouldThrowWhenWrongTypeRequested() throws Exception {
+		parser.specifyIntegerParameter('p');
+		parser.parse("-p", "42");
+		
+		@SuppressWarnings("unused")
+		String d = parser.<String> getParameter('p');
+	}
+	
 	@Test
 	public void shouldReturnIntegerValueWhenSet() throws Exception {
 		parser.specifyIntegerParameter('p');
@@ -80,13 +89,13 @@ public class ParameterTypesParsingTest {
 		assertEquals(Integer.valueOf(42), parser.<Integer> getParameter('p'));
 	}
 	
-	@Test(expected = ClassCastException.class)
-	public void shouldThrowWhenWrongTypeRequested() throws Exception {
-		parser.specifyIntegerParameter('p');
-		parser.parse("-p", "42");
+	@Test
+	public void shouldReturnIntegerValueWhenSetWithLongName() throws Exception {
+		parser.specifyIntegerParameter("long-parameter");
+		parser.parse("--long-parameter", "42");
 		
-		@SuppressWarnings("unused")
-		String d = parser.<String> getParameter('p');
+		assertEquals(42, parser.getParameter("long-parameter"));
+		assertEquals(Integer.valueOf(42), parser.<Integer> getParameter("long-parameter"));
 	}
 	
 	@Test
