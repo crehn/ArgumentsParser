@@ -158,6 +158,10 @@ public class ArgumentParser {
 		return arguments.getArgumentByName(argumentName);
 	}
 	
+	<T> Argument<T> getArgumentByName(String longArgumentName) {
+		return arguments.getArgumentByName(longArgumentName);
+	}
+	
 	public <T> T getParameter(String longParamName) {
 		return (T) arguments.getValueByName(longParamName);
 	}

@@ -25,49 +25,88 @@ public class ArgumentParserBuilder {
 		return parser;
 	}
 	
-	public ArgumentParserBuilder withOption(char optionName) {
-		parser.specifyOption(optionName);
+	public ArgumentParserBuilder withOption(String longOptionName) {
+		return withOption(longOptionName, null);
+	}
+	
+	public ArgumentParserBuilder withOption(String longOptionName, Character shortOptionName) {
+		parser.specifyOption(longOptionName, shortOptionName);
 		return this;
 	}
 	
-	public ArgumentParserBuilder andOption(char optionName) {
-		return withOption(optionName);
+	public ArgumentParserBuilder andOption(String longOptionName) {
+		return withOption(longOptionName);
 	}
 	
-	public ArgumentParserBuilder withStringParameter(char parameterName) {
-		parser.specifyStringParameter(parameterName);
+	public ArgumentParserBuilder andOption(String longOptionName, Character shortOptionName) {
+		return withOption(longOptionName, shortOptionName);
+	}
+	
+	public ArgumentParserBuilder withStringParameter(String longParamName) {
+		return withStringParameter(longParamName, null);
+	}
+	
+	public ArgumentParserBuilder withStringParameter(String longParamName, Character shortParamName) {
+		parser.specifyStringParameter(longParamName, shortParamName);
 		return this;
 	}
 	
-	public ArgumentParserBuilder andStringParameter(char parameterName) {
-		return withStringParameter(parameterName);
+	public ArgumentParserBuilder andStringParameter(String longParamName) {
+		return withStringParameter(longParamName);
 	}
 	
-	public ArgumentParserBuilder withIntegerParameter(char parameterName) {
-		parser.specifyIntegerParameter(parameterName);
+	public ArgumentParserBuilder andStringParameter(String longParamName, Character shortParamName) {
+		return withStringParameter(longParamName, shortParamName);
+	}
+	
+	public ArgumentParserBuilder withIntegerParameter(String longParamName) {
+		return withIntegerParameter(longParamName, null);
+	}
+	
+	public ArgumentParserBuilder withIntegerParameter(String longParamName, Character shortParamName) {
+		parser.specifyIntegerParameter(longParamName, shortParamName);
 		return this;
 	}
 	
-	public ArgumentParserBuilder andIntegerParameter(char parameterName) {
-		return withIntegerParameter(parameterName);
+	public ArgumentParserBuilder andIntegerParameter(String longParamName) {
+		return withIntegerParameter(longParamName);
 	}
 	
-	public ArgumentParserBuilder withDoubleParameter(char parameterName) {
-		parser.specifyDoubleParameter(parameterName);
+	public ArgumentParserBuilder andIntegerParameter(String longParamName, Character shortParamName) {
+		return withIntegerParameter(longParamName, shortParamName);
+	}
+	
+	public ArgumentParserBuilder withDoubleParameter(String longParamName) {
+		return withDoubleParameter(longParamName, null);
+	}
+	
+	public ArgumentParserBuilder withDoubleParameter(String longParamName, Character shortParamName) {
+		parser.specifyDoubleParameter(longParamName, shortParamName);
 		return this;
 	}
 	
-	public ArgumentParserBuilder andDoubleParameter(char parameterName) {
-		return withDoubleParameter(parameterName);
+	public ArgumentParserBuilder andDoubleParameter(String longParamName) {
+		return withDoubleParameter(longParamName);
 	}
 	
-	public ArgumentParserBuilder withStringListParameter(char parameterName) {
-		parser.specifyStringListParameter(parameterName);
+	public ArgumentParserBuilder andDoubleParameter(String longParamName, Character shortParamName) {
+		return withDoubleParameter(longParamName, shortParamName);
+	}
+	
+	public ArgumentParserBuilder withStringListParameter(String longParamName) {
+		return withStringListParameter(longParamName, null);
+	}
+	
+	public ArgumentParserBuilder withStringListParameter(String longParamName, Character shortParamName) {
+		parser.specifyStringListParameter(longParamName, shortParamName);
 		return this;
 	}
 	
-	public ArgumentParserBuilder andStringListParameter(char parameterName) {
-		return withStringListParameter(parameterName);
+	public ArgumentParserBuilder andStringListParameter(String longParamName) {
+		return withStringListParameter(longParamName);
 	}
 	
+	public ArgumentParserBuilder andStringListParameter(String longParamName, Character shortParamName) {
+		return withStringListParameter(longParamName, shortParamName);
+	}
 }

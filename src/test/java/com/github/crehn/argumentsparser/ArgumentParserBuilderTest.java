@@ -26,72 +26,124 @@ import org.junit.Test;
 public class ArgumentParserBuilderTest {
 	
 	ArgumentParserBuilder buildParser;
+	private ArgumentParser parser;
 	
 	@Before
 	public void setup() {
 		buildParser = new ArgumentParserBuilder();
 	}
 	
+	private <T> void assertSpecified(Class<? extends Argument<T>> argumentType, String... names) {
+		for (String name : names) {
+			assertTrue(parser.isSpecified(name));
+			assertEquals(argumentType, parser.getArgumentByName(name).getClass());
+		}
+	}
+	
+	private <T> void assertSpecified(Class<? extends Argument<T>> argumentType, Character... names) {
+		for (Character name : names) {
+			assertTrue(parser.isSpecified(name));
+			assertEquals(argumentType, parser.getArgumentByName(name).getClass());
+		}
+	}
+	
 	@Test
-	public void buildsEmptyParser() throws Exception {
-		ArgumentParser parser = buildParser.build();
+	public void shouldBuildEmptyParser() throws Exception {
+		parser = buildParser.build();
 		
 		assertNotNull(parser);
 	}
 	
 	@Test
-	public void buildsParserWithOptions() throws Exception {
-		ArgumentParser parser = buildParser.withOption('o').andOption('p').build();
+	public void shouldBuildParserWithOptions() throws Exception {
+		parser = buildParser.withOption("long-option", 'l').andOption("other-option", 'o').build();
 		
-		assertTrue(parser.isSpecified('o'));
-		assertTrue(parser.isSpecified('p'));
-		assertEquals(Option.class, parser.getArgumentByName('o').getClass());
-		assertEquals(Option.class, parser.getArgumentByName('p').getClass());
+		assertSpecified(Option.class, "long-option", "other-option");
+		assertSpecified(Option.class, 'l', 'o');
 	}
 	
 	@Test
-	public void buildsParserWithStringParams() throws Exception {
-		ArgumentParser parser = buildParser.withStringParameter('p').andStringParameter('q').build();
+	public void shouldBuildParserWithOptionsWithoutShortForm() throws Exception {
+		parser = buildParser.withOption("long-option").andOption("other-option").build();
 		
-		assertTrue(parser.isSpecified('p'));
-		assertTrue(parser.isSpecified('q'));
-		assertEquals(StringParameter.class, parser.getArgumentByName('p').getClass());
-		assertEquals(StringParameter.class, parser.getArgumentByName('q').getClass());
+		assertSpecified(Option.class, "long-option", "other-option");
 	}
 	
 	@Test
-	public void buildsParserWithIntegerParams() throws Exception {
-		ArgumentParser parser = buildParser.withIntegerParameter('p').andIntegerParameter('q').build();
+	public void shouldBuildParserWithStringParams() throws Exception {
+		parser = buildParser.withStringParameter("long-parameter", 'l').andStringParameter("other-parameter", 'o')
+				.build();
 		
-		assertTrue(parser.isSpecified('p'));
-		assertTrue(parser.isSpecified('q'));
-		assertEquals(IntegerParameter.class, parser.getArgumentByName('p').getClass());
-		assertEquals(IntegerParameter.class, parser.getArgumentByName('q').getClass());
+		assertSpecified(StringParameter.class, "long-parameter", "other-parameter");
+		assertSpecified(StringParameter.class, 'l', 'o');
 	}
 	
 	@Test
-	public void buildsParserWithDoubleParams() throws Exception {
-		ArgumentParser parser = buildParser.withDoubleParameter('p').andDoubleParameter('q').build();
+	public void shouldBuildParserWithStringParamsWithoutShortForm() throws Exception {
+		parser = buildParser.withStringParameter("long-parameter").andStringParameter("other-parameter").build();
 		
-		assertTrue(parser.isSpecified('p'));
-		assertTrue(parser.isSpecified('q'));
-		assertEquals(DoubleParameter.class, parser.getArgumentByName('p').getClass());
-		assertEquals(DoubleParameter.class, parser.getArgumentByName('q').getClass());
+		assertSpecified(StringParameter.class, "long-parameter", "other-parameter");
 	}
 	
 	@Test
-	public void buildsParserWithStringListParams1() throws Exception {
-		ArgumentParser parser = buildParser.withStringListParameter('p').build();
+	public void shouldBuildParserWithIntegerParams() throws Exception {
+		parser = buildParser.withIntegerParameter("long-parameter", 'l').andIntegerParameter("other-parameter", 'o')
+				.build();
 		
-		assertTrue(parser.isSpecified('p'));
-		assertEquals(StringListParameter.class, parser.getArgumentByName('p').getClass());
+		assertSpecified(IntegerParameter.class, "long-parameter", "other-parameter");
+		assertSpecified(IntegerParameter.class, 'l', 'o');
 	}
 	
 	@Test
-	public void buildsParserWithStringListParams2() throws Exception {
-		ArgumentParser parser = buildParser.andStringListParameter('q').build();
+	public void shouldBuildParserWithIntegerParamsWithoutShortForm() throws Exception {
+		parser = buildParser.withIntegerParameter("long-parameter").andIntegerParameter("other-parameter").build();
 		
-		assertTrue(parser.isSpecified('q'));
-		assertEquals(StringListParameter.class, parser.getArgumentByName('q').getClass());
+		assertSpecified(IntegerParameter.class, "long-parameter", "other-parameter");
+	}
+	
+	@Test
+	public void shouldBuildParserWithDoubleParams() throws Exception {
+		parser = buildParser.withDoubleParameter("long-parameter", 'l').andDoubleParameter("other-parameter", 'o')
+				.build();
+		
+		assertSpecified(DoubleParameter.class, "long-parameter", "other-parameter");
+		assertSpecified(DoubleParameter.class, 'l', 'o');
+	}
+	
+	@Test
+	public void shouldBuildParserWithDoubleParamsWithoutShortForm() throws Exception {
+		parser = buildParser.withDoubleParameter("long-parameter").andDoubleParameter("other-parameter").build();
+		
+		assertSpecified(DoubleParameter.class, "long-parameter", "other-parameter");
+	}
+	
+	@Test
+	public void shouldBuildParserWithStringListParams() throws Exception {
+		parser = buildParser.withStringListParameter("long-parameter", 'p').build();
+		
+		assertSpecified(StringListParameter.class, "long-parameter");
+		assertSpecified(StringListParameter.class, 'p');
+	}
+	
+	@Test
+	public void shouldBuildParserWithStringListParamsWithoutShortForm() throws Exception {
+		parser = buildParser.withStringListParameter("long-parameter").build();
+		
+		assertSpecified(StringListParameter.class, "long-parameter");
+	}
+	
+	@Test
+	public void shouldBuildParserWithStringListParams2() throws Exception {
+		parser = buildParser.andStringListParameter("long-parameter", 'p').build();
+		
+		assertSpecified(StringListParameter.class, "long-parameter");
+		assertSpecified(StringListParameter.class, 'p');
+	}
+	
+	@Test
+	public void shouldBuildParserWithStringListParams2WithoutShortForm() throws Exception {
+		parser = buildParser.andStringListParameter("long-parameter").build();
+		
+		assertSpecified(StringListParameter.class, "long-parameter");
 	}
 }
