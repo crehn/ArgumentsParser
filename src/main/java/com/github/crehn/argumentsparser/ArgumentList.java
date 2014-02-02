@@ -33,7 +33,7 @@ class ArgumentList<T> extends ArrayList<Argument<T>> {
 	
 	Argument<T> getArgumentByName(Character argumentName) {
 		for (Argument<T> arg : this) {
-			if (arg.getShortName() == argumentName)
+			if (arg.getShortName().equals(argumentName))
 				return arg;
 		}
 		return null;
@@ -46,9 +46,9 @@ class ArgumentList<T> extends ArrayList<Argument<T>> {
 		return getArgumentByName(longArgumentName) != null;
 	}
 	
-	private Argument<T> getArgumentByName(String longArgumentName) {
+	Argument<T> getArgumentByName(String longArgumentName) {
 		for (Argument<T> arg : this) {
-			if (arg.getLongName() == longArgumentName)
+			if (arg.getLongName().equals(longArgumentName))
 				return arg;
 		}
 		return null;
