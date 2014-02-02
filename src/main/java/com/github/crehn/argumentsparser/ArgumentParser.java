@@ -111,11 +111,18 @@ public class ArgumentParser {
 		arguments.add(new IntegerParameter(longParamName, shortParamName));
 	}
 	
-	public void specifyDoubleParameter(char paramName) {
-		if (arguments.isSpecified(paramName))
-			throw new IllegalArgumentException("Argument already specified: " + paramName);
+	public void specifyDoubleParameter(char shortParamName) {
+		specifyDoubleParameter(null, shortParamName);
+	}
+	
+	public void specifyDoubleParameter(String longParamName) {
+		specifyDoubleParameter(longParamName, null);
+	}
+	
+	public void specifyDoubleParameter(String longParamName, Character shortParamName) {
+		throwWhenAlreadySpecified(longParamName, shortParamName);
 		
-		arguments.add(new DoubleParameter(paramName));
+		arguments.add(new DoubleParameter(longParamName, shortParamName));
 	}
 	
 	public void specifyStringListParameter(char paramName) {

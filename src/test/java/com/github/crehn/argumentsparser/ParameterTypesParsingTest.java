@@ -111,6 +111,18 @@ public class ParameterTypesParsingTest {
 	}
 	
 	@Test
+	public void shouldReturnDoubleValueWhenSetWithLongName() throws Exception {
+		parser.specifyDoubleParameter("long-parameter");
+		parser.specifyDoubleParameter("other-parameter");
+		parser.parse("--long-parameter", "42", "--other-parameter", "12.34");
+		
+		assertEquals(42.0, parser.getParameter("long-parameter"));
+		assertEquals(Double.valueOf(42), parser.<Double> getParameter("long-parameter"));
+		assertEquals(12.34, parser.getParameter("other-parameter"));
+		assertEquals(Double.valueOf(12.34), parser.<Double> getParameter("other-parameter"));
+	}
+	
+	@Test
 	public void shouldReturnStringListValueWhenSet() throws Exception {
 		parser.specifyStringListParameter('p');
 		parser.parse("-p", "42", "-q", "12.34");

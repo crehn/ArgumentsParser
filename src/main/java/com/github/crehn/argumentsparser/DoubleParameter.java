@@ -19,8 +19,8 @@
 package com.github.crehn.argumentsparser;
 
 class DoubleParameter extends AbstractParameter<Double> {
-	public DoubleParameter(char name) {
-		super(null, name);
+	public DoubleParameter(String longParamName, Character shortParamName) {
+		super(longParamName, shortParamName);
 	}
 	
 	@Override
