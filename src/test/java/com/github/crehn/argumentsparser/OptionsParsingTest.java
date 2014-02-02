@@ -87,7 +87,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void shouldReturnTrueWhenOptionIsSet() throws Exception {
+	public void shouldReturnTrueWhenOptionSet() throws Exception {
 		parser.specifyOption('o');
 		parser.parse("-o");
 		
@@ -95,7 +95,7 @@ public class OptionsParsingTest {
 	}
 	
 	@Test
-	public void shouldReturnFalseWhenOptionIsNotSet() throws Exception {
+	public void shouldReturnFalseWhenOptionNotSet() throws Exception {
 		parser.specifyOption('o');
 		parser.specifyOption('u');
 		parser.parse("-o");
@@ -121,5 +121,13 @@ public class OptionsParsingTest {
 		
 		assertTrue(parser.isOptionSet('o'));
 		assertTrue(parser.isOptionSet('u'));
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenLongFormIsSet() throws Exception {
+		parser.specifyOption("long-option", 'o');
+		parser.parse("--long-option");
+		
+		assertTrue(parser.isOptionSet('o'));
 	}
 }

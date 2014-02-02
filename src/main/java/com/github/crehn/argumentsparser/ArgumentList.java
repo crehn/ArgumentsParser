@@ -24,13 +24,31 @@ import java.util.List;
 class ArgumentList<T> extends ArrayList<Argument<T>> {
 	private static final long serialVersionUID = 1L;
 	
-	public boolean isSpecified(Character argumentName) {
-		return getArgumentByName(argumentName) != null;
+	public boolean isSpecified(Character shortArgumentName) {
+		if (shortArgumentName == null)
+			return false;
+		
+		return getArgumentByName(shortArgumentName) != null;
 	}
 	
 	Argument<T> getArgumentByName(Character argumentName) {
 		for (Argument<T> arg : this) {
 			if (arg.getShortName() == argumentName)
+				return arg;
+		}
+		return null;
+	}
+	
+	public boolean isSpecified(String longArgumentName) {
+		if (longArgumentName == null)
+			return false;
+		
+		return getArgumentByName(longArgumentName) != null;
+	}
+	
+	private Argument<T> getArgumentByName(String longArgumentName) {
+		for (Argument<T> arg : this) {
+			if (arg.getLongName() == longArgumentName)
 				return arg;
 		}
 		return null;
@@ -70,14 +88,6 @@ class ArgumentList<T> extends ArrayList<Argument<T>> {
 			throw new IllegalArgumentException("Argument is not specified: " + longArgumentName);
 		
 		return arg.getValue();
-	}
-	
-	private Argument<T> getArgumentByName(String longArgumentName) {
-		for (Argument<T> arg : this) {
-			if (arg.getLongName() == longArgumentName)
-				return arg;
-		}
-		return null;
 	}
 	
 }

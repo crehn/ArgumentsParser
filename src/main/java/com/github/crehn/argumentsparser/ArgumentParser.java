@@ -65,8 +65,18 @@ public class ArgumentParser {
 	public void specifyOption(String longOptionName, Character shortOptionName) {
 		if (arguments.isSpecified(shortOptionName))
 			throw new IllegalArgumentException("Argument already specified: " + shortOptionName);
+		if (arguments.isSpecified(longOptionName))
+			throw new IllegalArgumentException("Argument already specified: " + longOptionName);
 		
 		arguments.add(new Option(longOptionName, shortOptionName));
+	}
+	
+	boolean isSpecified(char shortArgumentName) {
+		return arguments.isSpecified(shortArgumentName);
+	}
+	
+	boolean isSpecified(String longArgumentName) {
+		return arguments.isSpecified(longArgumentName);
 	}
 	
 	public void specifyStringParameter(char parameterName) {
@@ -108,10 +118,6 @@ public class ArgumentParser {
 	
 	public <T> T getParameter(char paramName) {
 		return (T) arguments.getValueByName(paramName);
-	}
-	
-	boolean isSpecified(char argumentName) {
-		return arguments.isSpecified(argumentName);
 	}
 	
 	<T> Argument<T> getArgumentByName(char argumentName) {
