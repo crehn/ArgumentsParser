@@ -80,6 +80,12 @@ public class ParameterTypesParsingTest {
 		String d = parser.<String> getParameter('p');
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowWhenSpecifyingTwoStringListParams() throws Exception {
+		parser.specifyStringListParameter("long-parameter");
+		parser.specifyStringListParameter("other-parameter");
+	}
+	
 	@Test
 	public void shouldReturnIntegerValueWhenSet() throws Exception {
 		parser.specifyIntegerParameter("long-parameter", 'p');

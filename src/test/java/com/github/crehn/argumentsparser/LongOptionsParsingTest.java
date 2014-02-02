@@ -40,6 +40,13 @@ public class LongOptionsParsingTest {
 		assertFalse(parser.isOptionSet("long-option"));
 	}
 	
+	@Test(expected = UnexpectedArgumentException.class)
+	public void shouldThrowWhenOnlyTwoDashes() throws Exception {
+		parser.specifyOption("long-option");
+		
+		parser.parse("--");
+	}
+	
 	@Test
 	public void shouldReturnFalseForEmptyArgument() throws Exception {
 		parser.specifyOption("long-option");

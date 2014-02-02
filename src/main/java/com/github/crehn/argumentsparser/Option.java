@@ -37,7 +37,7 @@ class Option implements Argument<Boolean> {
 	}
 	
 	private boolean parseArgument(String argument) {
-		return argument != null && (isShortForm(argument) || isLongForm(argument));
+		return isShortForm(argument) || isLongForm(argument);
 	}
 	
 	private boolean isShortForm(String argument) {

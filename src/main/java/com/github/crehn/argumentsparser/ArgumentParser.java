@@ -38,7 +38,7 @@ public class ArgumentParser {
 			int sizeBefore = yetToParse.size();
 			yetToParse = arguments.parse(yetToParse);
 			if (!sizeHasChanged(yetToParse, sizeBefore)) {
-				if (looksLikeOptions(yetToParse.get(0)))
+				if (looksLikeOptions(yetToParse.get(0)) || looksLikeParameter(yetToParse.get(0)))
 					throw new UnknownArgumentException(yetToParse.get(0).charAt(1));
 				else
 					throw new UnexpectedArgumentException(yetToParse.get(0));
@@ -51,7 +51,11 @@ public class ArgumentParser {
 	}
 	
 	private boolean looksLikeOptions(String arg) {
-		return arg.startsWith("-") && arg.length() > 1;
+		return arg.startsWith("-") && arg.length() > 1 && !arg.substring(1).contains("-");
+	}
+	
+	private boolean looksLikeParameter(String arg) {
+		return arg.startsWith("--") && arg.length() > 2;
 	}
 	
 	public void specifyOption(String longOptionName) {
