@@ -37,7 +37,7 @@ public class ArgumentParserTest {
 	
 	@Test(expected = UnexpectedArgumentException.class)
 	public void parseThrowsWhenOnlyDash() throws Exception {
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
 		
 		parser.parse("-");
 	}

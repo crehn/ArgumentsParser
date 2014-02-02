@@ -54,10 +54,6 @@ public class ArgumentParser {
 		return arg.startsWith("-") && arg.length() > 1;
 	}
 	
-	public void specifyOption(char shortOptionName) {
-		specifyOption(null, shortOptionName);
-	}
-	
 	public void specifyOption(String longOptionName) {
 		specifyOption(longOptionName, null);
 	}
@@ -74,10 +70,6 @@ public class ArgumentParser {
 	
 	boolean isSpecified(String longArgumentName) {
 		return arguments.isSpecified(longArgumentName);
-	}
-	
-	public void specifyStringParameter(char shortParamName) {
-		specifyStringParameter(null, shortParamName);
 	}
 	
 	public void specifyStringParameter(String longParamName) {
@@ -97,10 +89,6 @@ public class ArgumentParser {
 			throw new IllegalArgumentException("Argument already specified: " + shortParamName);
 	}
 	
-	public void specifyIntegerParameter(char shortParamName) {
-		specifyIntegerParameter(null, shortParamName);
-	}
-	
 	public void specifyIntegerParameter(String longParamName) {
 		specifyIntegerParameter(longParamName, null);
 	}
@@ -111,10 +99,6 @@ public class ArgumentParser {
 		arguments.add(new IntegerParameter(longParamName, shortParamName));
 	}
 	
-	public void specifyDoubleParameter(char shortParamName) {
-		specifyDoubleParameter(null, shortParamName);
-	}
-	
 	public void specifyDoubleParameter(String longParamName) {
 		specifyDoubleParameter(longParamName, null);
 	}
@@ -123,10 +107,6 @@ public class ArgumentParser {
 		throwWhenAlreadySpecified(longParamName, shortParamName);
 		
 		arguments.add(new DoubleParameter(longParamName, shortParamName));
-	}
-	
-	public void specifyStringListParameter(char paramName) {
-		specifyStringListParameter(null, paramName);
 	}
 	
 	public void specifyStringListParameter(String longParamName) {

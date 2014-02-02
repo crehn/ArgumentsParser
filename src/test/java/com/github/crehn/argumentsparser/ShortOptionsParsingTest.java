@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class OptionsParsingTest {
+public class ShortOptionsParsingTest {
 	
 	ArgumentParser parser;
 	
@@ -35,14 +35,14 @@ public class OptionsParsingTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowWhenSpecifyingOptionTwice() throws Exception {
-		parser.specifyOption('o');
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
+		parser.specifyOption("other-option", 'o');
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowWhenAlreadyAParameter() throws Exception {
-		parser.specifyStringParameter('o');
-		parser.specifyOption('o');
+		parser.specifyStringParameter("long-parameter", 'o');
+		parser.specifyOption("long-option", 'o');
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
@@ -52,14 +52,14 @@ public class OptionsParsingTest {
 	
 	@Test(expected = UnknownArgumentException.class)
 	public void shouldThrowWhenAFurtherUnspecifiedOption() throws Exception {
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
 		
 		parser.parse("-o", "-u");
 	}
 	
 	@Test(expected = UnknownArgumentException.class)
 	public void shouldThrowWhenAFurtherUnspecifiedConcatenatedOption() throws Exception {
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
 		
 		parser.parse("-ou");
 	}
@@ -73,14 +73,14 @@ public class OptionsParsingTest {
 	
 	@Test
 	public void shouldReturnFalseWhenParseNotCalled() throws Exception {
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
 		
 		assertFalse(parser.isOptionSet('o'));
 	}
 	
 	@Test
 	public void shouldReturnFalseForEmptyArgs() throws Exception {
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
 		parser.parse();
 		
 		assertFalse(parser.isOptionSet('o'));
@@ -88,7 +88,7 @@ public class OptionsParsingTest {
 	
 	@Test
 	public void shouldReturnTrueWhenOptionSet() throws Exception {
-		parser.specifyOption('o');
+		parser.specifyOption("long-option", 'o');
 		parser.parse("-o");
 		
 		assertTrue(parser.isOptionSet('o'));
@@ -96,8 +96,8 @@ public class OptionsParsingTest {
 	
 	@Test
 	public void shouldReturnFalseWhenOptionNotSet() throws Exception {
-		parser.specifyOption('o');
-		parser.specifyOption('u');
+		parser.specifyOption("long-option", 'o');
+		parser.specifyOption("other-option", 'u');
 		parser.parse("-o");
 		
 		assertFalse(parser.isOptionSet('u'));
@@ -105,8 +105,8 @@ public class OptionsParsingTest {
 	
 	@Test
 	public void shouldSetReturnTrueWhenSecondOptionSet() throws Exception {
-		parser.specifyOption('o');
-		parser.specifyOption('u');
+		parser.specifyOption("long-option", 'o');
+		parser.specifyOption("other-option", 'u');
 		parser.parse("-o", "-u");
 		
 		assertTrue(parser.isOptionSet('o'));
@@ -115,8 +115,8 @@ public class OptionsParsingTest {
 	
 	@Test
 	public void shouldReturnTrueWhenConcatenatedOptionSet() throws Exception {
-		parser.specifyOption('o');
-		parser.specifyOption('u');
+		parser.specifyOption("long-option", 'o');
+		parser.specifyOption("other-option", 'u');
 		parser.parse("-ou");
 		
 		assertTrue(parser.isOptionSet('o'));
