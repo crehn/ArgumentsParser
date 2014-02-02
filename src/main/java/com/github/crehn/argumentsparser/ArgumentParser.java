@@ -63,10 +63,10 @@ public class ArgumentParser {
 	}
 	
 	public void specifyOption(String longOptionName, Character shortOptionName) {
-		if (arguments.isSpecified(shortOptionName))
-			throw new IllegalArgumentException("Argument already specified: " + shortOptionName);
 		if (arguments.isSpecified(longOptionName))
 			throw new IllegalArgumentException("Argument already specified: " + longOptionName);
+		if (arguments.isSpecified(shortOptionName))
+			throw new IllegalArgumentException("Argument already specified: " + shortOptionName);
 		
 		arguments.add(new Option(longOptionName, shortOptionName));
 	}
@@ -79,32 +79,42 @@ public class ArgumentParser {
 		return arguments.isSpecified(longArgumentName);
 	}
 	
-	public void specifyStringParameter(char parameterName) {
-		if (arguments.isSpecified(parameterName))
-			throw new IllegalArgumentException("Argument already specified: " + parameterName);
-		
-		arguments.add(new StringParameter(parameterName));
+	public void specifyStringParameter(char shortParamName) {
+		specifyStringParameter(null, shortParamName);
 	}
 	
-	public void specifyIntegerParameter(char parameterName) {
-		if (arguments.isSpecified(parameterName))
-			throw new IllegalArgumentException("Argument already specified: " + parameterName);
-		
-		arguments.add(new IntegerParameter(parameterName));
+	public void specifyStringParameter(String longParamName) {
+		specifyStringParameter(longParamName, null);
 	}
 	
-	public void specifyDoubleParameter(char parameterName) {
-		if (arguments.isSpecified(parameterName))
-			throw new IllegalArgumentException("Argument already specified: " + parameterName);
+	public void specifyStringParameter(String longParamName, Character shortParamName) {
+		if (arguments.isSpecified(longParamName))
+			throw new IllegalArgumentException("Argument already specified: " + longParamName);
+		if (arguments.isSpecified(shortParamName))
+			throw new IllegalArgumentException("Argument already specified: " + shortParamName);
 		
-		arguments.add(new DoubleParameter(parameterName));
+		arguments.add(new StringParameter(longParamName, shortParamName));
 	}
 	
-	public void specifyStringListParameter(char parameterName) {
-		if (arguments.isSpecified(parameterName) || catchAllArgAlreadySpecified)
-			throw new IllegalArgumentException("Argument already specified: " + parameterName);
+	public void specifyIntegerParameter(char paramName) {
+		if (arguments.isSpecified(paramName))
+			throw new IllegalArgumentException("Argument already specified: " + paramName);
 		
-		arguments.add(new StringListParameter(null, parameterName));
+		arguments.add(new IntegerParameter(paramName));
+	}
+	
+	public void specifyDoubleParameter(char paramName) {
+		if (arguments.isSpecified(paramName))
+			throw new IllegalArgumentException("Argument already specified: " + paramName);
+		
+		arguments.add(new DoubleParameter(paramName));
+	}
+	
+	public void specifyStringListParameter(char paramName) {
+		if (arguments.isSpecified(paramName) || catchAllArgAlreadySpecified)
+			throw new IllegalArgumentException("Argument already specified: " + paramName);
+		
+		arguments.add(new StringListParameter(null, paramName));
 		catchAllArgAlreadySpecified = true;
 	}
 	
@@ -122,5 +132,9 @@ public class ArgumentParser {
 	
 	<T> Argument<T> getArgumentByName(char argumentName) {
 		return arguments.getArgumentByName(argumentName);
+	}
+	
+	public <T> T getParameter(String longParamName) {
+		return (T) arguments.getValueByName(longParamName);
 	}
 }

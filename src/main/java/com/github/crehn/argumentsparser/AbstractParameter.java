@@ -35,7 +35,7 @@ abstract class AbstractParameter<T> implements Argument<T> {
 		if (yetToParse.size() == 1)
 			throw new ParameterValueMissingException(yetToParse.get(0));
 		if (value != null)
-			throw new ParameterAlreadyOccuredException(shortName);
+			throw new ParameterAlreadyOccuredException(longName);
 		
 		value = convertType(yetToParse.get(1));
 		return yetToParse.subList(2, yetToParse.size());
@@ -53,6 +53,6 @@ abstract class AbstractParameter<T> implements Argument<T> {
 	}
 	
 	private boolean canHandle(String argument) {
-		return ("-" + shortName).equals(argument);
+		return ("-" + shortName).equals(argument) || ("--" + longName).equals(argument);
 	}
 }

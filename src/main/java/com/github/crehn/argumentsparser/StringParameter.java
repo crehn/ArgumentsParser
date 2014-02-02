@@ -19,8 +19,8 @@
 package com.github.crehn.argumentsparser;
 
 class StringParameter extends AbstractParameter<String> {
-	public StringParameter(char name) {
-		super(null, name);
+	public StringParameter(String longParameterName, Character shortParameterName) {
+		super(longParameterName, shortParameterName);
 	}
 	
 	@Override

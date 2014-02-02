@@ -34,7 +34,7 @@ public class ParameterTest {
 	
 	@Before
 	public void setup() {
-		parameter = new StringParameter('p');
+		parameter = new StringParameter(null, 'p');
 	}
 	
 	private void givenArguments(String... arguments) {
